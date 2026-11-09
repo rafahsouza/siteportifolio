@@ -133,8 +133,8 @@ nav a,.about-project-link,.footer-links a{display:inline-flex;align-items:center
 
 /* A janela nasce da capa e retorna a ela ao fechar. */
 #project-modal{will-change:transform,opacity;backface-visibility:hidden;max-width:960px;max-height:90dvh;overflow:auto;transform-origin:center;overscroll-behavior:contain}
-#project-modal::backdrop{background:rgba(15,21,17,.68);animation:project-backdrop-in .5s cubic-bezier(.37,0,.63,1) both;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
-#project-modal.is-closing::backdrop{animation:project-backdrop-out .8s cubic-bezier(.37,0,.63,1) both}
+#project-modal::backdrop{background:rgba(15,21,17,.68);animation:project-backdrop-in .3s cubic-bezier(.37,0,.63,1) both;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+#project-modal.is-closing::backdrop{animation:project-backdrop-out .3s cubic-bezier(.37,0,.63,1) both}
 #project-modal .modal-top h2{font-size:clamp(19px,3vw,26px)}
 #project-modal .close{flex-shrink:0}
 .modal-media{position:relative;aspect-ratio:16/9;margin-top:22px;border-radius:16px;overflow:hidden;background:#101510}
@@ -200,7 +200,7 @@ async function openProject(project){
  projectAnimation=modal.animate([
   {transform:projectMotion.matches?'none':projectTransform(),opacity:projectMotion.matches?0:1},
   {transform:'none',opacity:1}
- ],{duration:projectMotion.matches?120:500,easing:'cubic-bezier(.37,0,.63,1)'});
+ ],{duration:projectMotion.matches?120:300,easing:'cubic-bezier(.37,0,.63,1)'});
  try{await projectAnimation.finished}catch{return}
  projectAnimation=null;
  if(session!==projectSession||projectClosing||!modal.open||!hasVideo)return;
@@ -223,7 +223,7 @@ async function closeProject(){
  projectAnimation=modal.animate([
   {transform:'none',opacity:1},
   {transform:projectMotion.matches?'none':projectTransform(),opacity:0}
- ],{duration:projectMotion.matches?120:800,easing:'cubic-bezier(.37,0,.63,1)'});
+ ],{duration:projectMotion.matches?120:300,easing:'cubic-bezier(.37,0,.63,1)'});
  try{await projectAnimation.finished}catch{}
  projectAnimation=null;
  modal.close();

@@ -217,6 +217,11 @@ dialog.is-closing::backdrop{animation:fade-out .3s both}
 .modal-tag{grid-column:1/-1;margin:0}
 .modal-copy,.modal-credits{margin:0;font-size:15px;line-height:1.7;color:var(--ink-2);white-space:pre-line}
 .modal-credits{color:var(--muted);font-size:14px}
+/* Ficha técnica do projeto */
+.modal-facts{margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);border-top:1px solid var(--line)}
+.modal-facts dt,.modal-facts dd{margin:0;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px;line-height:1.5}
+.modal-facts dt{padding-right:28px;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.modal-facts dd{color:var(--ink)}
 .modal-links{display:flex;flex-direction:column;align-items:flex-end;gap:8px;font-size:14px}
 .modal-links a{border-bottom:1px solid var(--line-2);padding-bottom:2px}
 .modal-links a:hover{border-color:var(--ink)}
@@ -408,7 +413,7 @@ dialog.is-closing::backdrop{animation:fade-out .3s both}
  <section class="campaign-gallery" id="campaign-gallery" aria-labelledby="campaign-gallery-title" hidden><h3 class="label" id="campaign-gallery-title">Vídeos da campanha</h3><div class="campaign-strip" id="campaign-strip" role="group" aria-label="Selecionar vídeo da campanha"></div></section>
  <div class="modal-body">
   <p class="modal-tag label" id="modal-tag"></p>
-  <div><p class="modal-copy" id="modal-copy"></p><p class="modal-credits" id="modal-credits" hidden></p></div>
+  <div><p class="modal-copy" id="modal-copy"></p><p class="modal-credits" id="modal-credits" hidden></p><dl class="modal-facts" id="modal-facts" hidden></dl></div>
   <div class="modal-links"><a id="modal-website" target="_blank" rel="noopener noreferrer" hidden>Site da campanha ↗</a><a id="modal-youtube" target="_blank" rel="noopener noreferrer" hidden>Assistir no YouTube ↗</a></div>
  </div>
 </dialog>
@@ -417,7 +422,8 @@ dialog.is-closing::backdrop{animation:fade-out .3s both}
 
 <!-- Catálogo de projetos: cada entrada vira um card, na ordem abaixo (o primeiro é o destaque e a capa do quadro do topo).
      Vídeo do Google Drive: {"drive": "ID_DO_ARQUIVO", "title": "Nome", "duration": "00:30"}, com a capa em assets/capas/ID_DO_ARQUIVO.jpg.
-     Vídeo do YouTube: {"id": "ID_DO_YOUTUBE", "title": "Nome"}. "client" aparece junto do tipo no card; "cover" (arquivo em assets/capas) troca a capa do card.
+     Vídeo do YouTube: {"id": "ID_DO_YOUTUBE", "title": "Nome"}. "brand" (nome curto) e "year" aparecem no card; "campaign", "year", "client", "producer" e "role" formam a ficha técnica da janela;
+     "cover" (arquivo em assets/capas) troca a capa do card.
      "summary" é a frase curta do card (o que o vídeo entregou); "duration" (ex.: "01:30") aparece sobre a capa.
      Projetos sem vídeo ficam ocultos até receberem o primeiro. -->
 <script type="application/json" id="portfolio-projects">
@@ -435,11 +441,17 @@ dialog.is-closing::backdrop{animation:fade-out .3s both}
         "title": "Mês das Mães",
         "duration": "01:00"
       }
-    ]
+    ],
+    "brand": "Lojas Cem",
+    "campaign": "Mês das Mães",
+    "year": "2026",
+    "producer": "Paprika Filmes",
+    "role": "Montagem, cor e efeitos",
+    "cover": "lojas-cem-mes-das-maes.jpg"
   },
   "assai-manifesto": {
     "title": "Manifesto",
-    "client": "Assaí",
+    "client": "Assaí Atacadista",
     "kind": "edit",
     "summary": "",
     "description": "",
@@ -450,7 +462,13 @@ dialog.is-closing::backdrop{animation:fade-out .3s both}
         "title": "Manifesto",
         "duration": "00:30"
       }
-    ]
+    ],
+    "brand": "Assaí",
+    "campaign": "Manifesto 50 Anos",
+    "year": "2024",
+    "producer": "Paprika Filmes",
+    "role": "Montagem e efeitos",
+    "cover": "assai-manifesto-50-anos.jpg"
   },
   "lojas-cem-pra-toda-gente": {
     "title": "Pra Toda Gente",
@@ -481,11 +499,17 @@ dialog.is-closing::backdrop{animation:fade-out .3s both}
         "title": "Filme 05",
         "duration": "00:30"
       }
-    ]
+    ],
+    "brand": "Lojas Cem",
+    "campaign": "Pra Toda Gente",
+    "year": "2024",
+    "producer": "Paprika Filmes",
+    "role": "Montagem",
+    "cover": "lojas-cem-pra-toda-gente.jpg"
   },
   "direitos-de-verdade": {
     "title": "Direitos de Verdade",
-    "client": "MPT",
+    "client": "Agência Bretas e Ministério Público do Trabalho (MPT)",
     "type": "campaign",
     "kind": "campaign",
     "summary": "",
@@ -519,11 +543,16 @@ dialog.is-closing::backdrop{animation:fade-out .3s both}
       }
     ],
     "website": "https://direitosdeverdade.com/en/",
-    "cover": "direitos-de-verdade.jpg"
+    "cover": "direitos-de-verdade.jpg",
+    "brand": "MPT",
+    "campaign": "Direitos de Verdade",
+    "year": "2024",
+    "producer": "Paprika Filmes",
+    "role": "Montagem e efeitos"
   },
-  "assai-institucional-crianca": {
-    "title": "Institucional Criança",
-    "client": "Assaí",
+  "assai-pascoa": {
+    "title": "Páscoa",
+    "client": "Assaí Atacadista",
     "kind": "edit",
     "summary": "",
     "description": "",
@@ -531,10 +560,16 @@ dialog.is-closing::backdrop{animation:fade-out .3s both}
     "videos": [
       {
         "drive": "1W6FbZ8ZW97ZxdB6PXRwUVtBUuTtmba3x",
-        "title": "Institucional Criança",
+        "title": "Páscoa",
         "duration": "00:30"
       }
-    ]
+    ],
+    "brand": "Assaí",
+    "campaign": "Páscoa 2024",
+    "year": "2024",
+    "producer": "Paprika Filmes",
+    "role": "Montagem, cor e animação",
+    "cover": "assai-pascoa-2024.jpg"
   },
   "solo-parque-da-floresta": {
     "title": "Solo Parque da Floresta",
@@ -563,7 +598,9 @@ const campaignCover='data:image/svg+xml;charset=utf-8,'+encodeURIComponent('<svg
 const ytPattern=/^[A-Za-z0-9_-]{11}$/,drivePattern=/^[A-Za-z0-9_-]{25,}$/;
 const thumb=v=>v.src==='drive'?`../assets/capas/${v.id}.jpg`:`https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`;
 const playerSrc=v=>v.src==='drive'?`https://drive.google.com/file/d/${v.id}/preview`:`https://www.youtube-nocookie.com/embed/${v.id}?autoplay=1&rel=0&playsinline=1`;
-const externalLink=v=>v.src==='drive'?{href:`https://drive.google.com/file/d/${v.id}/view`,text:'Abrir no Google Drive ↗'}:{href:`https://www.youtube.com/watch?v=${v.id}`,text:'Assistir no YouTube ↗'};
+// Vídeos do Drive não ganham link externo; os do YouTube mantêm 'Assistir no YouTube'.
+const externalLink=v=>v.src==='youtube'?{href:`https://www.youtube.com/watch?v=${v.id}`,text:'Assistir no YouTube ↗'}:null;
+function syncExternalLink(v){const a=$('#modal-youtube'),ext=v&&externalLink(v);a.hidden=!ext;if(ext){a.href=ext.href;a.textContent=ext.text}else a.removeAttribute('href')}
 // Cada vídeo vem do Google Drive ("drive") ou do YouTube ("id").
 function videosOf(d){const seen=new Set();return (Array.isArray(d.videos)?d.videos:[]).map(v=>{if(!v)return null;if(drivePattern.test(v.drive||''))return {src:'drive',id:v.drive,title:v.title,duration:v.duration};if(ytPattern.test(v.id||''))return {src:'youtube',id:v.id,title:v.title,duration:v.duration};return null}).filter(v=>v&&!seen.has(v.src+v.id)&&seen.add(v.src+v.id)).map((v,i)=>({...v,title:String(v.title||`Vídeo ${i+1}`),duration:String(v.duration||'')}))}
 function websiteOf(d){try{const u=new URL(d.website);return ['https:','http:'].includes(u.protocol)?u.href:''}catch{return ''}}
@@ -582,7 +619,7 @@ projects.forEach((p,i)=>{
  card.setAttribute('aria-label',`${card.dataset.title} — ${count}`);
  card.innerHTML=`<div class="work-media"><img alt="" loading="${i===0?'eager':'lazy'}" decoding="async"><span class="chip mono"></span>${p.videos.length?'<span class="work-play" aria-hidden="true"></span>':''}</div><div class="work-info"><span class="label"></span><h3></h3><span class="work-desc"></span></div>`;
  const chip=card.querySelector('.chip');chip.textContent=p.details.duration||(p.videos.length===1?p.videos[0].duration:'');chip.hidden=!chip.textContent;
- card.querySelector('.label').textContent=[p.details.client,kindLabel[card.dataset.kind]||'Projeto',p.videos.length>1?count:''].filter(Boolean).join(' · ');
+ card.querySelector('.label').textContent=[p.details.brand||p.details.client||kindLabel[card.dataset.kind]||'Projeto',p.details.year,p.videos.length>1?count:''].filter(Boolean).join(' · ');
  card.querySelector('h3').textContent=card.dataset.title;
  const desc=card.querySelector('.work-desc');desc.textContent=p.details.summary||'';desc.hidden=!desc.textContent;
  const img=card.querySelector('img');
@@ -611,7 +648,7 @@ $('.filters').hidden=filterButtons.filter(b=>b.dataset.filter!=='all'&&!b.hidden
 /* Abertura: vídeo próprio se houver; senão a capa do primeiro projeto. */
 const hero=$('#inicio'),reelVideo=$('#reel-video');
 const firstWithVideo=projects.find(p=>p.videos.length);
-if(firstWithVideo){setThumb($('#reel-poster'),firstWithVideo.videos[0]);$('#reel-btn-meta').textContent=firstWithVideo.details.title}
+if(firstWithVideo){if(firstWithVideo.details.cover)$('#reel-poster').src=`../assets/capas/${firstWithVideo.details.cover}`;else setThumb($('#reel-poster'),firstWithVideo.videos[0]);$('#reel-btn-meta').textContent=firstWithVideo.details.title}
 else $('#reel-poster').src=campaignCover;
 $('#reel-btn').addEventListener('click',()=>{const card=firstWithVideo&&works.querySelector(`[data-project="${firstWithVideo.key}"]`);if(card)openProject(card,$('#reel-btn'));else location.hash='#trabalhos'});
 $('#reel-cta').addEventListener('click',()=>$('#reel-btn').click());
@@ -661,7 +698,7 @@ function selectVideo(i){
  setThumb($('#modal-art'),v);
  $('#campaign-video-title').textContent=v.title;
  $('#campaign-position').textContent=`${pad(i+1)} / ${pad(activeVideos.length)}`;
- const ext=externalLink(v);$('#modal-youtube').href=ext.href;$('#modal-youtube').textContent=ext.text;
+ syncExternalLink(v);
  strip.querySelectorAll('button').forEach((b,j)=>b.setAttribute('aria-pressed',String(j===i)));
  const f=document.createElement('iframe');
  f.title=`${activeCard.dataset.title} — ${v.title} — player de vídeo`;
@@ -682,6 +719,9 @@ async function openProject(card,from=card){
  $('#modal-tag').textContent=[isCampaign?'Campanha':kindLabel[details.kind]||'Projeto',has?`${activeVideos.length} ${activeVideos.length===1?'vídeo':'vídeos'}`:'Em breve'].join(' · ');
  const copy=$('#modal-copy');copy.textContent=details.description||'';copy.hidden=!copy.textContent;
  const credits=$('#modal-credits');credits.textContent=details.credits?`Participação: ${details.credits}`:'';credits.hidden=!credits.textContent;
+ const facts=$('#modal-facts');facts.replaceChildren();
+ [['Campanha',details.campaign],['Ano',details.year],['Cliente',details.client],['Produtora',details.producer],[details.role,details.role&&'Rafael Monteiro']].forEach(([k,v])=>{if(!k||!v)return;const dt=document.createElement('dt'),dd=document.createElement('dd');dt.textContent=k;dd.textContent=v;facts.append(dt,dd)});
+ facts.hidden=!facts.children.length;
  $('#campaign-current').hidden=activeVideos.length<2;$('#campaign-gallery').hidden=activeVideos.length<2;
  $('#campaign-video-title').textContent=has?activeVideos[0].title:'';
  $('#campaign-position').textContent=has?`01 / ${pad(activeVideos.length)}`:'';
@@ -694,7 +734,7 @@ async function openProject(card,from=card){
   b.append(im,l);b.addEventListener('click',()=>selectVideo(i));strip.append(b);
  });
  const site=websiteOf(details),siteLink=$('#modal-website');siteLink.hidden=!site;if(site)siteLink.href=site;else siteLink.removeAttribute('href');
- const yt=$('#modal-youtube');yt.hidden=!has;if(has){const ext=externalLink(activeVideos[0]);yt.href=ext.href;yt.textContent=ext.text}else yt.removeAttribute('href');
+ syncExternalLink(activeVideos[0]);
  prevOverflow=document.documentElement.style.overflow;document.documentElement.style.overflow='hidden';
  modal.classList.remove('is-closing');modal.showModal();modal.scrollTop=0;
  anim=modal.animate([{transform:reduceMotion.matches?'none':fromTransform(),opacity:reduceMotion.matches?0:1},{transform:'none',opacity:1}],{duration:reduceMotion.matches?120:340,easing:'cubic-bezier(.2,.7,.2,1)'});

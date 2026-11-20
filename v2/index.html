@@ -417,7 +417,7 @@ dialog.is-closing::backdrop{animation:fade-out .3s both}
 
 <!-- Catálogo de projetos: cada entrada vira um card. Para adicionar vídeos, inclua {"id": "ID_DO_YOUTUBE", "title": "Nome"}.
      "summary" é a frase curta do card (o que o vídeo entregou); "duration" (ex.: "01:30") aparece sobre a capa.
-     Projetos sem vídeo ficam ocultos até receberem o primeiro. -->
+     Projetos sem vídeo ficam ocultos até receberem o primeiro; campanhas aparecem mesmo antes dos vídeos. -->
 <script type="application/json" id="portfolio-projects">
 {
   "projeto-video": {
@@ -463,7 +463,7 @@ function setThumb(img,id){img.onerror=()=>{img.onerror=null;img.src=thumb(id)};i
 
 /* Cards */
 const works=$('#works');
-const projects=Object.entries(catalog).map(([key,details])=>({key,details,videos:videosOf(details)})).filter(p=>p.videos.length);
+const projects=Object.entries(catalog).map(([key,details])=>({key,details,videos:videosOf(details)})).filter(p=>p.videos.length||p.details.type==='campaign');
 projects.forEach((p,i)=>{
  const card=document.createElement('button');
  card.type='button';card.className='work reveal'+(i===0?' is-featured':'');

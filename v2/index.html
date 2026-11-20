@@ -162,10 +162,10 @@ main>section{scroll-margin-top:96px}
 .formats-label{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .formats-list{font-family:var(--serif);font-size:clamp(26px,3vw,40px);line-height:1.15;letter-spacing:-.01em;color:var(--ink)}
 .formats-list i{font-style:normal;color:var(--accent);margin:0 .28em}
-/* Mesma lista, discreta, abaixo do texto da abertura. */
-.hero-tags{margin:14px 0 0;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+/* Mesma lista na abertura, abaixo do texto de apoio. */
+.formats-hero{margin-top:clamp(18px,2vw,26px);padding-top:0;border-top:0;gap:6px 20px}
+.formats-hero .formats-list{font-size:clamp(24px,2.4vw,32px)}
 .nw{white-space:nowrap}
-.hero-tags i{font-style:normal;color:var(--line-2);margin:0 .2em}
 
 /* Sobre */
 .about{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(32px,6vw,88px);align-items:center}
@@ -290,7 +290,7 @@ dialog.is-closing::backdrop{animation:fade-out .3s both}
  <p class="label hero-kicker"><span class="dot blink" aria-hidden="true"></span>Rafael Monteiro — Edição e pós-produção</p>
  <h1 class="display" id="hero-title"><span class="line"><span>Transformando ideias</span></span> <span class="line"><span>em <em>vídeos</em>, narrativas e</span></span> <span class="line"><span>experiências visuais.</span></span></h1>
  <div class="hero-row">
-  <div><p class="hero-lede">Edição e pós-produção com ritmo, clareza e intenção.</p><p class="hero-tags">Publicidade <i aria-hidden="true">·</i> Institucionais <i aria-hidden="true">·</i> <span class="nw">Redes sociais</span> <i aria-hidden="true">·</i> YouTube</p></div>
+  <div><p class="hero-lede">Edição e pós-produção com ritmo, clareza e intenção.</p><p class="formats formats-hero"><span class="formats-label">Vídeos para</span><span class="formats-list"><span class="nw">Publicidade <i aria-hidden="true">·</i></span> <span class="nw">Institucionais <i aria-hidden="true">·</i></span> <span class="nw">Redes sociais <i aria-hidden="true">·</i></span> <span class="nw">YouTube</span></span></p></div>
   <div class="hero-actions">
    <a class="btn btn-ink" href="#trabalhos">Ver projetos <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
   </div>
@@ -329,7 +329,7 @@ dialog.is-closing::backdrop{animation:fade-out .3s both}
   <article class="service"><div class="service-top"><span class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M3 12h1M7 8v8M11 5v14M15 9v6M19 7v10"/></svg></span></div><h3>Som</h3><p>Trilha, SFX e mixagem.</p></article>
   <article class="service"><div class="service-top"><span class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg></span></div><h3>Finalização</h3><p>Pronto para todos os formatos e plataformas.</p></article>
  </div>
- <p class="formats reveal"><span class="formats-label">Vídeos para</span><span class="formats-list">Publicidade <i aria-hidden="true">·</i> Institucionais <i aria-hidden="true">·</i> <span class="nw">Redes sociais</span> <i aria-hidden="true">·</i> YouTube</span></p>
+ <p class="formats reveal"><span class="formats-label">Vídeos para</span><span class="formats-list"><span class="nw">Publicidade <i aria-hidden="true">·</i></span> <span class="nw">Institucionais <i aria-hidden="true">·</i></span> <span class="nw">Redes sociais <i aria-hidden="true">·</i></span> <span class="nw">YouTube</span></span></p>
 </section>
 
 <section class="section" id="sobre" aria-labelledby="sobre-title">

@@ -126,12 +126,6 @@ main>section{scroll-margin-top:96px}
 .section-head>div:first-child{display:flex;flex-direction:column;gap:14px}
 
 /* Filtros */
-.filters{display:flex;flex-wrap:wrap;gap:8px}
-.filters button{min-height:40px;padding:0 16px;border-radius:999px;border:1px solid var(--line-2);background:transparent;font-size:14px;color:var(--ink-2);transition:background .2s,border-color .2s,color .2s}
-.filters button sup{font-family:var(--mono);font-size:10px;margin-left:4px;color:var(--muted)}
-.filters button:hover{border-color:var(--ink)}
-.filters button[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:var(--surface)}
-.filters button[aria-pressed=true] sup{color:#f6f5f2a6}
 
 /* Trabalhos */
 .works{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(28px,3vw,40px) clamp(16px,2vw,28px)}
@@ -309,12 +303,6 @@ dialog.is-closing::backdrop{animation:fade-out .3s both}
 <section class="section" id="trabalhos" aria-labelledby="trabalhos-title">
  <div class="section-head reveal">
   <div><span class="label">01 — Trabalhos</span><h2 class="h2" id="trabalhos-title">Trabalhos selecionados</h2></div>
-  <div class="filters" role="group" aria-label="Filtrar projetos">
-   <button type="button" aria-pressed="true" data-filter="all">Todos</button>
-   <button type="button" aria-pressed="false" data-filter="edit">Edição</button>
-   <button type="button" aria-pressed="false" data-filter="post">Pós-produção</button>
-   <button type="button" aria-pressed="false" data-filter="campaign">Campanhas</button>
-  </div>
  </div>
  <div class="works" id="works"></div>
 </section>
@@ -578,8 +566,10 @@ projects.forEach((p,i)=>{
  const count=p.videos.length?`${p.videos.length} ${p.videos.length===1?'vídeo':'vídeos'}`:'Em breve';
  card.setAttribute('aria-label',`${card.dataset.title} — ${count}`);
  card.innerHTML=`<div class="work-media"><img alt="" loading="${i===0?'eager':'lazy'}" decoding="async"><span class="chip mono"></span>${p.videos.length?'<span class="work-play" aria-hidden="true"></span>':''}</div><div class="work-info"><span class="label"></span><h3></h3><span class="work-desc"></span></div>`;
- const chip=card.querySelector('.chip');chip.textContent=p.details.duration||(p.videos.length===1?p.videos[0].duration:'');chip.hidden=!chip.textContent;
- card.querySelector('.label').textContent=[p.details.brand||p.details.client||kindLabel[card.dataset.kind]||'Projeto',p.details.year,p.videos.length>1?count:''].filter(Boolean).join(' · ');
+ // Campanha ganha a marca no próprio card; filme único mostra a duração.
+ const isCampaign=p.details.type==='campaign'||p.videos.length>1;
+ const chip=card.querySelector('.chip');chip.textContent=isCampaign?`Campanha · ${p.videos.length} ${p.videos.length===1?'filme':'filmes'}`:(p.details.duration||p.videos[0]?.duration||'');chip.hidden=!chip.textContent;
+ card.querySelector('.label').textContent=[p.details.brand||p.details.client||kindLabel[card.dataset.kind]||'Projeto',p.details.year].filter(Boolean).join(' · ');
  card.querySelector('h3').textContent=card.dataset.title;
  const desc=card.querySelector('.work-desc');desc.textContent=p.details.summary||'';desc.hidden=!desc.textContent;
  const img=card.querySelector('img');
@@ -587,23 +577,6 @@ projects.forEach((p,i)=>{
  card.addEventListener('click',()=>openProject(card));
  works.append(card);
 });
-/* Filtros com contagem; somem quando não há projetos. */
-const filterButtons=[...document.querySelectorAll('[data-filter]')];
-filterButtons.forEach(b=>{
- const n=b.dataset.filter==='all'?projects.length:projects.filter(p=>(p.details.kind||'edit')===b.dataset.filter).length;
- if(!n){b.hidden=true;return}
- b.insertAdjacentHTML('beforeend',`<sup>${pad(n)}</sup>`);
- b.addEventListener('click',()=>{
-  filterButtons.forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
-  const f=b.dataset.filter;
-  works.querySelectorAll('.work').forEach(c=>{c.hidden=f!=='all'&&c.dataset.kind!==f});
-  const visible=[...works.querySelectorAll('.work:not([hidden])')];
-  works.querySelectorAll('.work').forEach(c=>c.classList.remove('is-featured'));
-  if(visible[0]&&(f==='all'||visible.length===1))visible[0].classList.add('is-featured');
- });
-});
-// Filtro só aparece quando há pelo menos duas categorias para escolher.
-$('.filters').hidden=filterButtons.filter(b=>b.dataset.filter!=='all'&&!b.hidden).length<2;
 
 /* Abertura: vídeo próprio se houver; senão a capa do primeiro projeto. */
 const hero=$('#inicio'),reelVideo=$('#reel-video');

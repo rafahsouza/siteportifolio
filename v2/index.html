@@ -78,7 +78,18 @@ a:hover>.arrow,button:hover>.arrow{transform:translateX(3px)}
 .hero-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:24px 40px;margin-top:clamp(28px,4vw,48px)}
 .hero-lede{margin:0;max-width:34ch;font-size:clamp(16px,1.35vw,19px);line-height:1.55;color:var(--ink-2)}
 .hero-actions{display:flex;flex-wrap:wrap;gap:10px}
-.reel{position:relative;margin:clamp(40px,6vw,72px) 0 0}
+/* Chamada para o reel: faixa logo abaixo do texto, ligada ao quadro do vídeo. */
+.reel-cta{display:flex;align-items:center;gap:clamp(14px,2vw,24px);width:100%;margin-top:clamp(40px,6vw,72px);padding:clamp(16px,2vw,22px) 0;border:0;border-top:1px solid var(--ink);background:none;text-align:left}
+.reel-cta .cta-play{width:clamp(48px,5vw,64px);height:clamp(48px,5vw,64px);border-radius:50%;background:var(--accent);display:grid;place-items:center;flex:none;transition:transform .35s var(--ease)}
+.reel-cta .cta-play::after{content:"";border-left:14px solid #fff;border-top:9px solid transparent;border-bottom:9px solid transparent;margin-left:4px}
+.reel-cta .cta-text{display:flex;flex-direction:column;gap:4px;min-width:0}
+.reel-cta strong{font-family:var(--serif);font-weight:400;font-size:clamp(28px,3.4vw,48px);line-height:1;letter-spacing:-.02em}
+.reel-cta strong em{color:var(--accent)}
+.reel-cta .cta-hint{margin-left:auto;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);white-space:nowrap;display:flex;align-items:center;gap:8px}
+.reel-cta .cta-hint i{font-style:normal;display:inline-block;transition:transform .35s var(--ease)}
+.reel-cta:hover .cta-play{transform:scale(1.08)}
+.reel-cta:hover .cta-hint i{transform:translateY(3px)}
+.reel{position:relative;margin:clamp(14px,1.6vw,20px) 0 0}
 .crop{position:absolute;width:18px;height:18px;border:0 solid var(--ink);pointer-events:none}
 .crop.a{top:-10px;left:-10px;border-top-width:1px;border-left-width:1px}
 .crop.b{top:-10px;right:-10px;border-top-width:1px;border-right-width:1px}
@@ -297,6 +308,11 @@ dialog.is-closing::backdrop{animation:fade-out .3s both}
    <a class="btn btn-line" href="#contato">Entrar em contato</a>
   </div>
  </div>
+ <button class="reel-cta" id="reel-cta" type="button" aria-label="Assistir ao showreel">
+  <span class="cta-play" aria-hidden="true"></span>
+  <span class="cta-text"><span class="label">Showreel</span><strong>Assista ao <em>reel</em></strong></span>
+  <span class="cta-hint" aria-hidden="true">Assistir <i>↓</i></span>
+ </button>
  <figure class="reel">
   <span class="crop a" aria-hidden="true"></span><span class="crop b" aria-hidden="true"></span><span class="crop c" aria-hidden="true"></span><span class="crop d" aria-hidden="true"></span>
   <button class="reel-frame" id="reel-btn" type="button" aria-label="Assistir ao projeto em destaque">
@@ -490,6 +506,7 @@ const firstWithVideo=projects.find(p=>p.videos.length);
 if(firstWithVideo){setThumb($('#reel-poster'),firstWithVideo.videos[0].id);$('#reel-btn-meta').textContent=firstWithVideo.details.title}
 else $('#reel-poster').src=campaignCover;
 $('#reel-btn').addEventListener('click',()=>{const card=firstWithVideo&&works.querySelector(`[data-project="${firstWithVideo.key}"]`);if(card)openProject(card,$('#reel-btn'));else location.hash='#trabalhos'});
+$('#reel-cta').addEventListener('click',()=>$('#reel-btn').click());
 const reelSrc=reelVideo.dataset.reelSrc.trim();
 let heroVisible=true;
 function syncReel(){if(!reelVideo.getAttribute('src'))return;(heroVisible&&!document.hidden&&!reduceMotion.matches)?reelVideo.play().catch(()=>{}):reelVideo.pause()}

@@ -75,11 +75,16 @@ a:hover>.arrow,button:hover>.arrow{transform:translateX(3px)}
 .hero-kicker{display:flex;align-items:center;gap:10px;margin:0 0 28px}
 .display{margin:0;font-family:var(--serif);font-weight:400;font-size:clamp(46px,7.6vw,118px);line-height:.96;letter-spacing:-.025em}
 .display em{color:var(--ink-2)}
-/* Palavra que alterna (filmes/vídeos) com corte seco: as duas ocupam a mesma célula,
-   então o espaço é sempre o da maior e o resto da frase não se mexe. */
-.word-swap{display:inline-grid;justify-items:end;color:var(--accent)!important}
-.word-swap>span{grid-area:1/1;visibility:hidden}
-.word-swap>span.is-on{visibility:visible}
+/* Palavra digitada (filmes/vídeos): as palavras invisíveis reservam a largura da maior,
+   então o resto da frase não se mexe enquanto o texto é escrito e apagado. */
+.word-swap{position:relative;display:inline-grid;color:var(--accent)!important}
+.word-swap .sizer{grid-area:1/1;visibility:hidden}
+.word-swap .sizer::after,.word-swap .typed::after{content:"";display:inline-block;width:.055em;height:.78em;margin-left:.04em;vertical-align:-.04em}
+.word-swap .typed{position:absolute;left:0;top:0;white-space:nowrap}
+.word-swap .typed::after{background:currentColor;animation:caret 1s steps(1) infinite}
+.word-swap .typed.busy::after{animation:none}
+@keyframes caret{50%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.word-swap .typed::after{display:none}}
 .display .line{display:block}
 .hero-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:24px 40px;margin-top:clamp(28px,4vw,48px)}
 .hero-lede{margin:0;max-width:34ch;font-size:clamp(16px,1.35vw,19px);line-height:1.55;color:var(--ink-2)}
@@ -293,7 +298,7 @@ dialog.is-closing::backdrop{animation:fade-out .3s both}
 <!-- Showreel: coloque o caminho de um MP4 curto e sem áudio em data-reel-src. Sem vídeo, mostra a capa do primeiro projeto. -->
 <section class="hero" id="inicio" aria-labelledby="hero-title">
  <p class="label hero-kicker"><span class="dot blink" aria-hidden="true"></span>Rafael Monteiro — Edição e pós-produção</p>
- <h1 class="display" id="hero-title" aria-label="Transformando ideias em filmes, narrativas e experiências visuais."><span class="line" aria-hidden="true"><span>Transformando ideias</span></span> <span class="line" aria-hidden="true"><span>em <em class="word-swap" id="word-swap"><span class="is-on">filmes</span><span>vídeos</span></em>, narrativas e</span></span> <span class="line" aria-hidden="true"><span>experiências visuais.</span></span></h1>
+ <h1 class="display" id="hero-title" aria-label="Transformando ideias em filmes, narrativas e experiências visuais."><span class="line" aria-hidden="true"><span>Transformando ideias</span></span> <span class="line" aria-hidden="true"><span>em <em class="word-swap" id="word-swap"><span class="sizer">filmes</span><span class="sizer">vídeos</span><span class="typed" id="typed">filmes</span></em>, narrativas e</span></span> <span class="line" aria-hidden="true"><span>experiências visuais.</span></span></h1>
  <div class="hero-row">
   <div><p class="hero-lede">Edição e pós-produção com ritmo, clareza e intenção.</p><p class="formats formats-hero"><span class="formats-label">Vídeos para</span><span class="formats-list"><span class="nw">Publicidade <i aria-hidden="true">·</i></span> <span class="nw">Institucionais <i aria-hidden="true">·</i></span> <span class="nw">Redes sociais <i aria-hidden="true">·</i></span> <span class="nw">YouTube</span></span></p></div>
   <div class="hero-actions">
@@ -616,13 +621,26 @@ let heroVisible=true;
 function syncReel(){if(!reelVideo.getAttribute('src'))return;(heroVisible&&!document.hidden&&!reduceMotion.matches)?reelVideo.play().catch(()=>{}):reelVideo.pause()}
 if(reelSrc){reelVideo.addEventListener('loadeddata',()=>{hero.classList.add('has-video');syncReel()},{once:true});reelVideo.src=reelSrc;syncReel()}
 
-/* Título: alterna 'filmes' e 'vídeos' enquanto a abertura está na tela. */
-const swapWords=[...document.querySelectorAll('#word-swap>span')];
-let swapIndex=0,swapTimer=0;
+/* Título: escreve e apaga 'filmes' e 'vídeos' enquanto a abertura está na tela. */
+const typed=$('#typed'),TYPE_WORDS=['filmes','vídeos'];
+let wordIndex=0,typeTimer=0,typing=false;
+const TYPE_MS=95,ERASE_MS=55,HOLD_MS=1800,GAP_MS=320;
+function typeStep(phase){
+ const word=TYPE_WORDS[wordIndex],cur=typed.textContent;
+ if(phase==='hold'){typed.classList.remove('busy');typeTimer=setTimeout(()=>typeStep('erase'),HOLD_MS);return}
+ typed.classList.add('busy');
+ if(phase==='erase'){
+  if(cur.length){typed.textContent=cur.slice(0,-1);typeTimer=setTimeout(()=>typeStep('erase'),ERASE_MS)}
+  else{wordIndex=(wordIndex+1)%TYPE_WORDS.length;typed.classList.remove('busy');typeTimer=setTimeout(()=>typeStep('type'),GAP_MS)}
+  return;
+ }
+ if(cur.length<word.length){typed.textContent=word.slice(0,cur.length+1);typeTimer=setTimeout(()=>typeStep('type'),TYPE_MS)}
+ else typeStep('hold');
+}
 function syncSwap(){
  const run=heroVisible&&!document.hidden&&!reduceMotion.matches;
- if(run&&!swapTimer)swapTimer=setInterval(()=>{swapWords[swapIndex].classList.remove('is-on');swapIndex=(swapIndex+1)%swapWords.length;swapWords[swapIndex].classList.add('is-on')},2400);
- if(!run&&swapTimer){clearInterval(swapTimer);swapTimer=0}
+ if(run&&!typing){typing=true;typeStep('hold')}
+ if(!run&&typing){typing=false;clearTimeout(typeTimer);typed.classList.remove('busy');typed.textContent=TYPE_WORDS[wordIndex]}
 }
 if('IntersectionObserver' in window)new IntersectionObserver(e=>{heroVisible=e[0].isIntersecting;syncReel();syncSwap()}).observe(hero);
 document.addEventListener('visibilitychange',syncSwap);

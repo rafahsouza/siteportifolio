@@ -69,18 +69,20 @@ a:hover>.arrow,button:hover>.arrow{transform:translateX(3px)}
 .header-cta{min-height:44px;padding:0 18px;font-size:14px}
 
 /* Abertura (como a primeira v2): título serifado, texto e botões em linha, e o quadro com marcas de corte. */
-.hero{padding-top:clamp(40px,7vw,104px)}
-.hero-kicker{display:flex;align-items:center;gap:10px;margin:0 0 clamp(20px,2.4vw,28px)}
-.hero h1{margin:0;font-family:var(--serif);font-weight:400;font-size:clamp(48px,7.8vw,120px);line-height:.96;letter-spacing:-.025em}
+/* Capa: a frase ocupa a primeira tela inteira; o vídeo aparece ao rolar. */
+.hero-cover{min-height:calc(100svh - 88px);display:flex;flex-direction:column;justify-content:space-between;gap:clamp(28px,4vw,48px);padding-block:clamp(24px,4vw,56px) clamp(24px,3vw,40px)}
+.hero-kicker{display:flex;align-items:center;gap:10px;margin:0}
+.hero h1{margin:0;font-weight:600;font-size:clamp(54px,min(13.6vw,17svh),210px);line-height:.9;letter-spacing:-.05em}
+.hero h1 .ln{display:block}
 /* Palavra que troca com corte seco; a barra embaixo marca o tempo até o próximo corte. */
-.swap{position:relative;display:inline-block;font-style:italic;color:var(--accent);white-space:nowrap}
+.swap{position:relative;display:inline-block;font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.02em;font-size:1.06em;color:var(--accent);white-space:nowrap}
 .swap::after{content:"";position:absolute;left:.04em;right:0;bottom:.06em;height:.03em;min-height:2px;border-radius:2px;background:currentColor;transform:scaleX(0);transform-origin:left}
 .swap.running::after{animation:scrub var(--swap-ms,2400ms) linear both}
 @keyframes scrub{to{transform:scaleX(1)}}
-.hero-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:24px 40px;margin-top:clamp(28px,4vw,48px)}
+.hero-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:24px 40px}
 .hero-lede{margin:0;max-width:40ch;font-size:clamp(16px,1.35vw,19px);line-height:1.55;color:var(--ink-2)}
 .hero-actions{display:flex;flex-wrap:wrap;gap:10px}
-.reel{position:relative;margin:clamp(40px,6vw,72px) 0 0}
+.reel{position:relative;margin:clamp(16px,2vw,24px) 0 0}
 .crop{position:absolute;width:18px;height:18px;border:0 solid var(--ink);pointer-events:none}
 .crop.a{top:-10px;left:-10px;border-top-width:1px;border-left-width:1px}
 .crop.b{top:-10px;right:-10px;border-top-width:1px;border-right-width:1px}
@@ -102,7 +104,8 @@ a:hover>.arrow,button:hover>.arrow{transform:translateX(3px)}
 @media(prefers-reduced-motion:no-preference){
  .hero h1 .ln{display:block;overflow:hidden;padding-bottom:.08em}
  .hero h1 .ln>span{display:block;animation:rise .9s var(--ease) both}
- .hero h1 .ln:nth-child(2)>span{animation-delay:.09s}
+ .hero h1 .ln:nth-child(2)>span{animation-delay:.08s}
+ .hero h1 .ln:nth-child(3)>span{animation-delay:.16s}
 }
 @keyframes rise{from{transform:translateY(105%)}}
 
@@ -257,6 +260,7 @@ dialog.is-closing::backdrop{animation:fade-out .3s both}
  .hero-row{grid-template-columns:1fr}
  .hero-actions .btn{flex:1 1 auto}
  .crop{display:none}
+ .hero h1{font-size:min(16.8vw,11svh)}
  .tc-end{display:none}
  .tc{min-width:0;font-size:11px}
  .timeline{gap:10px}
@@ -285,13 +289,15 @@ dialog.is-closing::backdrop{animation:fade-out .3s both}
 <main>
 <!-- Showreel: coloque o caminho de um MP4 curto e sem áudio em data-reel-src. Sem vídeo, mostra a capa do primeiro projeto. -->
 <section class="hero" id="inicio" aria-labelledby="hero-title">
- <p class="label hero-kicker"><span class="dot blink" aria-hidden="true"></span>Rafael Monteiro — Edição e pós-produção</p>
- <h1 id="hero-title" aria-label="Edição de vídeo para redes sociais, YouTube, publicidade, institucionais e eventos."><span class="ln" aria-hidden="true"><span>Edição de vídeo para</span></span> <span class="ln" aria-hidden="true"><span><span class="swap" id="swap">redes sociais</span>.</span></span></h1>
- <div class="hero-row">
-  <p class="hero-lede">Recebo o material bruto e entrego o vídeo pronto: edição, cor, som e finalização para marcas, agências e produtoras.</p>
-  <div class="hero-actions">
-   <a class="btn btn-ink" href="#trabalhos">Ver trabalhos <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
-   <a class="btn btn-line" href="#contato">Vamos conversar</a>
+ <div class="hero-cover">
+  <p class="label hero-kicker"><span class="dot blink" aria-hidden="true"></span>Rafael Monteiro — Edição e pós-produção</p>
+  <h1 id="hero-title" aria-label="Edição de vídeo para redes sociais, YouTube, publicidade, institucionais e eventos."><span class="ln" aria-hidden="true"><span>Edição de</span></span><span class="ln" aria-hidden="true"><span>vídeo para</span></span><span class="ln" aria-hidden="true"><span><span class="swap" id="swap">redes sociais</span>.</span></span></h1>
+  <div class="hero-row">
+   <p class="hero-lede">Recebo o material bruto e entrego o vídeo pronto: edição, cor, som e finalização para marcas, agências e produtoras.</p>
+   <div class="hero-actions">
+    <a class="btn btn-ink" href="#trabalhos">Ver trabalhos <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
+    <a class="btn btn-line" href="#contato">Vamos conversar</a>
+   </div>
   </div>
  </div>
  <figure class="reel">

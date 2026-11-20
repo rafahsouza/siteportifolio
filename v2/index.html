@@ -32,6 +32,7 @@
  --mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
  --gutter:clamp(16px,3.4vw,40px);
  --radius:20px;
+ --block:clamp(80px,8.4vw,120px); /* espaço único entre os blocos da página */
  --ease:cubic-bezier(.2,.7,.2,1);
 }
 *{box-sizing:border-box}
@@ -121,7 +122,10 @@ a:hover>.arrow,button:hover>.arrow{transform:translateX(3px)}
 
 /* Seções */
 main>section{scroll-margin-top:96px}
-.section{padding-top:clamp(88px,11vw,150px)}
+.section{padding-top:var(--block)}
+/* Compensa margens internas para o espaço visível entre blocos ficar igual. */
+#trabalhos{padding-top:calc(var(--block) - 12px)}
+#sobre{padding-top:calc(var(--block) - 13px)}
 .section-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px 40px;margin-bottom:clamp(28px,4vw,48px)}
 .section-head>div:first-child{display:flex;flex-direction:column;gap:14px}
 
@@ -165,7 +169,7 @@ main>section{scroll-margin-top:96px}
 .tools span{padding:8px 14px;border-radius:999px;border:1px solid var(--line-2);font-size:14px;color:var(--ink-2)}
 
 /* Contato */
-.contact{margin-top:clamp(88px,11vw,150px);border-radius:calc(var(--radius) + 12px);background:var(--surface);border:1px solid var(--line);padding:clamp(28px,6vw,80px);display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:36px}
+.contact{margin-top:calc(var(--block) + 12px);border-radius:calc(var(--radius) + 12px);background:var(--surface);border:1px solid var(--line);padding:clamp(28px,6vw,80px);display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:36px}
 .contact-copy{display:flex;flex-direction:column;gap:18px;max-width:640px}
 .contact h2{margin:0;font-size:clamp(40px,5.6vw,76px);line-height:.98;letter-spacing:-.04em}
 .contact-copy p{margin:0;font-size:18px;color:var(--ink-2)}

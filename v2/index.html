@@ -157,6 +157,11 @@ main>section{scroll-margin-top:96px}
 .service-icon svg{width:21px;height:21px}
 .service h3{margin:8px 0 0;font-size:20px;line-height:1.2;letter-spacing:-.01em}
 .service p{margin:0;font-size:15px;line-height:1.5;color:var(--ink-2)}
+/* Formatos atendidos: linha discreta abaixo dos serviços. */
+.formats{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 24px;margin:0;padding-top:20px;border-top:1px solid var(--line)}
+.formats-label{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.formats-list{font-size:16px;color:var(--ink-2)}
+.formats-list i{font-style:normal;color:var(--line-2);margin:0 6px}
 
 /* Sobre */
 .about{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(32px,6vw,88px);align-items:center}
@@ -320,6 +325,7 @@ dialog.is-closing::backdrop{animation:fade-out .3s both}
   <article class="service"><div class="service-top"><span class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M3 12h1M7 8v8M11 5v14M15 9v6M19 7v10"/></svg></span></div><h3>Som</h3><p>Trilha, SFX e mixagem.</p></article>
   <article class="service"><div class="service-top"><span class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg></span></div><h3>Finalização</h3><p>Pronto para todos os formatos e plataformas.</p></article>
  </div>
+ <p class="formats reveal"><span class="formats-label">Formatos</span><span class="formats-list">Publicidade <i aria-hidden="true">·</i> Institucionais <i aria-hidden="true">·</i> Redes sociais <i aria-hidden="true">·</i> YouTube</span></p>
 </section>
 
 <section class="section" id="sobre" aria-labelledby="sobre-title">

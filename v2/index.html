@@ -78,6 +78,8 @@ a:hover>.arrow,button:hover>.arrow{transform:translateX(3px)}
 .hero-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:24px 40px;margin-top:clamp(28px,4vw,48px)}
 .hero-lede{margin:0;max-width:34ch;font-size:clamp(16px,1.35vw,19px);line-height:1.55;color:var(--ink-2)}
 .hero-actions{display:flex;flex-wrap:wrap;gap:10px}
+.hero-services{margin-top:clamp(40px,5vw,64px)}
+.hero-services-title{margin:0 0 14px}
 .reel{position:relative;margin:clamp(40px,6vw,72px) 0 0}
 .crop{position:absolute;width:18px;height:18px;border:0 solid var(--ink);pointer-events:none}
 .crop.a{top:-10px;left:-10px;border-top-width:1px;border-left-width:1px}
@@ -114,7 +116,7 @@ a:hover>.arrow,button:hover>.arrow{transform:translateX(3px)}
 .timeline{position:relative;display:flex;align-items:center;gap:16px}
 .tc{font-family:var(--mono);font-size:13px;font-variant-numeric:tabular-nums;min-width:100px}
 .tc-end{color:var(--muted);text-align:right}
-.track{position:relative;flex:1 1 auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));height:46px;border-radius:12px;background:var(--surface);border:1px solid var(--line)}
+.track{position:relative;flex:1 1 auto;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));height:46px;border-radius:12px;background:var(--surface);border:1px solid var(--line)}
 .track a{position:relative;display:flex;align-items:center;gap:8px;padding:0 14px;font-size:14px;color:var(--muted);transition:color .2s,background .2s;min-width:0;white-space:nowrap;overflow:hidden}
 .track a+a{border-left:1px solid var(--line)}
 .track a .n{font-family:var(--mono);font-size:11px;color:var(--line-2)}
@@ -291,11 +293,21 @@ dialog.is-closing::backdrop{animation:fade-out .3s both}
  <p class="label hero-kicker"><span class="dot blink" aria-hidden="true"></span>Rafael Monteiro — Edição e pós-produção</p>
  <h1 class="display" id="hero-title"><span class="line"><span>Transformando ideias</span></span> <span class="line"><span>em <em>vídeos</em>, narrativas e</span></span> <span class="line"><span>experiências visuais.</span></span></h1>
  <div class="hero-row">
-  <p class="hero-lede">Edição e pós-produção com ritmo, clareza e intenção. Da construção da história ao cuidado com a imagem.</p>
+  <p class="hero-lede">Edição e pós-produção com ritmo, clareza e intenção.</p>
   <div class="hero-actions">
    <a class="btn btn-ink" href="#trabalhos">Ver projetos <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a>
    <a class="btn btn-line" href="#contato">Entrar em contato</a>
   </div>
+ </div>
+ <div class="hero-services" id="servicos" aria-labelledby="servicos-title">
+  <h2 class="label hero-services-title" id="servicos-title">O que eu faço</h2>
+  <div class="services">
+  <article class="service"><div class="service-top"><span class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M8.2 7.9 20 18M8.2 16.1 20 6"/></svg></span></div><h3>Edição e montagem</h3><p>Ritmo que segura a atenção do primeiro ao último frame.</p></article>
+  <article class="service"><div class="service-top"><span class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor"/></svg></span></div><h3>Color grading</h3><p>Cor consistente que dá identidade à marca em cada peça.</p></article>
+  <article class="service"><div class="service-top"><span class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 2.5v4M12 17.5v4M2.5 12h4M17.5 12h4"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg></span></div><h3>Efeitos visuais</h3><p>Tracking, troca de tela e composição que ninguém percebe.</p></article>
+  <article class="service"><div class="service-top"><span class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M3 12h1M7 8v8M11 5v14M15 9v6M19 7v10"/></svg></span></div><h3>Som</h3><p>Desenho de som e mixagem que dão peso à imagem.</p></article>
+  <article class="service"><div class="service-top"><span class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg></span></div><h3>Finalização</h3><p>Entrega pronta para cada tela, formato e plataforma.</p></article>
+ </div>
  </div>
  <figure class="reel">
   <span class="crop a" aria-hidden="true"></span><span class="crop b" aria-hidden="true"></span><span class="crop c" aria-hidden="true"></span><span class="crop d" aria-hidden="true"></span>
@@ -317,9 +329,8 @@ dialog.is-closing::backdrop{animation:fade-out .3s both}
   <div class="track" id="track">
    <span class="track-fill" aria-hidden="true"></span>
    <a href="#trabalhos"><span class="n">01</span>Trabalhos</a>
-   <a href="#servicos"><span class="n">02</span>Serviços</a>
-   <a href="#sobre"><span class="n">03</span>Sobre</a>
-   <a href="#contato"><span class="n">04</span>Contato</a>
+   <a href="#sobre"><span class="n">02</span>Sobre</a>
+   <a href="#contato"><span class="n">03</span>Contato</a>
    <span class="playhead" aria-hidden="true"></span>
   </div>
   <span class="tc tc-end" aria-hidden="true">FIM</span>
@@ -339,16 +350,6 @@ dialog.is-closing::backdrop{animation:fade-out .3s both}
  <div class="works" id="works"></div>
 </section>
 
-<section class="section" id="servicos" aria-labelledby="servicos-title">
- <div class="section-head reveal"><div><span class="label">02 — Serviços</span><h2 class="h2" id="servicos-title">O que eu faço</h2></div></div>
- <div class="services reveal">
-  <article class="service"><div class="service-top"><span class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M8.2 7.9 20 18M8.2 16.1 20 6"/></svg></span></div><h3>Edição e montagem</h3><p>Ritmo que segura a atenção do primeiro ao último frame.</p></article>
-  <article class="service"><div class="service-top"><span class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor"/></svg></span></div><h3>Color grading</h3><p>Cor consistente que dá identidade à marca em cada peça.</p></article>
-  <article class="service"><div class="service-top"><span class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="5"/><path d="M12 2.5v4M12 17.5v4M2.5 12h4M17.5 12h4"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg></span></div><h3>Efeitos visuais</h3><p>Tracking, troca de tela e composição que ninguém percebe.</p></article>
-  <article class="service"><div class="service-top"><span class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M3 12h1M7 8v8M11 5v14M15 9v6M19 7v10"/></svg></span></div><h3>Som</h3><p>Desenho de som e mixagem que dão peso à imagem.</p></article>
-  <article class="service"><div class="service-top"><span class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg></span></div><h3>Finalização</h3><p>Entrega pronta para cada tela, formato e plataforma.</p></article>
- </div>
-</section>
 
 <section class="section" id="sobre" aria-labelledby="sobre-title">
  <div class="about">
@@ -357,7 +358,7 @@ dialog.is-closing::backdrop{animation:fade-out .3s both}
    <figcaption class="chip">Rafael Monteiro</figcaption>
   </figure>
   <div class="about-copy reveal">
-   <span class="label">03 — Sobre</span>
+   <span class="label">02 — Sobre</span>
    <h2 class="h2" id="sobre-title">Sobre mim</h2>
    <p>Sou Rafael Monteiro, editor de vídeo e profissional de pós-produção. Minha experiência em produtora e agência reúne edição e pós-produção na colaboração com marcas, sempre pensando no que o vídeo precisa entregar para quem encomendou.</p>
    <p>A música guia meu olhar: cada corte, cada respiro e cada efeito sonoro existe para construir a sequência certa.</p>
@@ -368,7 +369,7 @@ dialog.is-closing::backdrop{animation:fade-out .3s both}
 
 <section class="contact" id="contato" aria-labelledby="contato-title">
  <div class="contact-copy reveal">
-  <span class="label">04 — Contato</span>
+  <span class="label">03 — Contato</span>
   <h2 id="contato-title">Vamos conversar<br>sobre seu projeto</h2>
   <p>Me conte o que você precisa entregar.</p>
  </div>

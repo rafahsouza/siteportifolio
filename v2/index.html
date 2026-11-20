@@ -145,9 +145,6 @@ main>section{scroll-margin-top:96px}
 .work h3{margin:0;font-size:clamp(22px,2vw,28px);line-height:1.15;letter-spacing:-.02em}
 .work.is-featured h3{font-size:clamp(26px,2.8vw,38px)}
 .work-desc{font-size:15px;color:var(--ink-2)}
-.work-slot .work-media{display:grid;place-items:center;background:transparent;border:1px dashed var(--line-2)}
-.work-slot .work-media p{margin:0;text-align:center;font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--muted);line-height:2}
-.work-slot h3{color:var(--muted)}
 
 /* Serviços */
 .services{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-top:1px solid var(--ink)}
@@ -251,7 +248,6 @@ dialog.is-closing::backdrop{animation:fade-out .3s both}
  .header-cta{min-height:40px;padding:0 14px;font-size:13px}
  .hero{min-height:560px;border-radius:var(--radius)}
  .hero-media::after{background:linear-gradient(180deg,#00000059 0%,#0000 20%,#0000008c 45%,#000000d9 100%)}
- .hero-top .chip:last-child{display:none}
  .reel-btn{width:100%}
  .tc-end{display:none}
  .tc{min-width:0;font-size:11px}
@@ -283,8 +279,7 @@ dialog.is-closing::backdrop{animation:fade-out .3s both}
 <section class="hero" id="inicio" aria-labelledby="hero-title">
  <div class="hero-media" aria-hidden="true"><img id="reel-poster" alt="" decoding="async"><video id="reel-video" muted loop playsinline preload="none" tabindex="-1" data-reel-src=""></video></div>
  <div class="hero-top">
-  <span class="chip"><span class="dot blink" aria-hidden="true"></span><span id="reel-state">Demo reel · em breve</span></span>
-  <span class="chip" aria-hidden="true">TC <span id="hero-tc">00:00:00:00</span></span>
+  <span class="chip"><span class="dot blink" aria-hidden="true"></span><span id="reel-state">Projeto em destaque</span></span>
  </div>
  <div class="hero-bottom">
   <div class="hero-copy">
@@ -388,13 +383,15 @@ dialog.is-closing::backdrop{animation:fade-out .3s both}
 <button type="button" class="to-top" id="to-top" aria-label="Voltar ao topo da página" aria-hidden="true" tabindex="-1"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 11 6-6 6 6M12 5v14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
 
 <!-- Catálogo de projetos: cada entrada vira um card. Para adicionar vídeos, inclua {"id": "ID_DO_YOUTUBE", "title": "Nome"}.
-     "summary" é a frase curta do card (o que o vídeo entregou). -->
+     "summary" é a frase curta do card (o que o vídeo entregou); "duration" (ex.: "01:30") aparece sobre a capa.
+     Projetos sem vídeo ficam ocultos até receberem o primeiro. -->
 <script type="application/json" id="portfolio-projects">
 {
   "projeto-video": {
     "title": "Projeto em vídeo",
     "kind": "edit",
     "summary": "",
+    "duration": "",
     "description": "",
     "credits": "",
     "videos": [
@@ -433,7 +430,7 @@ function setThumb(img,id){img.onerror=()=>{img.onerror=null;img.src=thumb(id)};i
 
 /* Cards */
 const works=$('#works');
-const projects=Object.entries(catalog).map(([key,details])=>({key,details,videos:videosOf(details)})).filter(p=>p.videos.length||p.details.type==='campaign');
+const projects=Object.entries(catalog).map(([key,details])=>({key,details,videos:videosOf(details)})).filter(p=>p.videos.length);
 projects.forEach((p,i)=>{
  const card=document.createElement('button');
  card.type='button';card.className='work reveal'+(i===0?' is-featured':'');
@@ -441,9 +438,9 @@ projects.forEach((p,i)=>{
  card.setAttribute('aria-haspopup','dialog');
  const count=p.videos.length?`${p.videos.length} ${p.videos.length===1?'vídeo':'vídeos'}`:'Em breve';
  card.setAttribute('aria-label',`${card.dataset.title} — ${count}`);
- card.innerHTML=`<div class="work-media"><img alt="" loading="${i===0?'eager':'lazy'}" decoding="async"><span class="chip"></span>${p.videos.length?'<span class="work-play" aria-hidden="true"></span>':''}</div><div class="work-info"><span class="label"></span><h3></h3><span class="work-desc"></span></div>`;
- card.querySelector('.chip').textContent=`${pad(i+1)} · ${count}`;
- card.querySelector('.label').textContent=kindLabel[card.dataset.kind]||'Projeto';
+ card.innerHTML=`<div class="work-media"><img alt="" loading="${i===0?'eager':'lazy'}" decoding="async"><span class="chip mono"></span>${p.videos.length?'<span class="work-play" aria-hidden="true"></span>':''}</div><div class="work-info"><span class="label"></span><h3></h3><span class="work-desc"></span></div>`;
+ const chip=card.querySelector('.chip');chip.textContent=p.details.duration||'';chip.hidden=!chip.textContent;
+ card.querySelector('.label').textContent=(kindLabel[card.dataset.kind]||'Projeto')+(p.videos.length>1?` · ${count}`:'');
  card.querySelector('h3').textContent=card.dataset.title;
  const desc=card.querySelector('.work-desc');desc.textContent=p.details.summary||'';desc.hidden=!desc.textContent;
  const img=card.querySelector('img');
@@ -451,12 +448,6 @@ projects.forEach((p,i)=>{
  card.addEventListener('click',()=>openProject(card));
  works.append(card);
 });
-// Espaço reservado: a seleção está crescendo.
-const slot=document.createElement('div');
-slot.className='work work-slot reveal';
-slot.innerHTML=`<div class="work-media"><p>--:--:--:--<br>PRÓXIMO PROJETO</p></div><div class="work-info"><span class="label">Em montagem</span><h3>Novos trabalhos em breve</h3></div>`;
-works.append(slot);
-
 /* Filtros com contagem; somem quando não há projetos. */
 const filterButtons=[...document.querySelectorAll('[data-filter]')];
 filterButtons.forEach(b=>{
@@ -466,12 +457,14 @@ filterButtons.forEach(b=>{
  b.addEventListener('click',()=>{
   filterButtons.forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
   const f=b.dataset.filter;
-  works.querySelectorAll('.work').forEach(c=>{c.hidden=c.classList.contains('work-slot')?f!=='all':f!=='all'&&c.dataset.kind!==f});
-  const visible=[...works.querySelectorAll('.work:not(.work-slot):not([hidden])')];
+  works.querySelectorAll('.work').forEach(c=>{c.hidden=f!=='all'&&c.dataset.kind!==f});
+  const visible=[...works.querySelectorAll('.work:not([hidden])')];
   works.querySelectorAll('.work').forEach(c=>c.classList.remove('is-featured'));
   if(visible[0]&&(f==='all'||visible.length===1))visible[0].classList.add('is-featured');
  });
 });
+// Filtro só aparece quando há pelo menos duas categorias para escolher.
+$('.filters').hidden=filterButtons.filter(b=>b.dataset.filter!=='all'&&!b.hidden).length<2;
 
 /* Abertura: vídeo próprio se houver; senão a capa do primeiro projeto. */
 const hero=$('#inicio'),reelVideo=$('#reel-video');
@@ -484,14 +477,9 @@ let heroVisible=true;
 function syncReel(){if(!reelVideo.getAttribute('src'))return;(heroVisible&&!document.hidden&&!reduceMotion.matches)?reelVideo.play().catch(()=>{}):reelVideo.pause()}
 if(reelSrc){reelVideo.addEventListener('loadeddata',()=>{hero.classList.add('has-video');$('#reel-state').textContent='Demo reel · mudo · loop';syncReel()},{once:true});reelVideo.src=reelSrc;syncReel()}
 
-/* Timecode do quadro: corre a 24 quadros por segundo enquanto a abertura está na tela. */
-const heroTC=$('#hero-tc');let tcStart=null,tcRaf=0;
-function tick(now){if(tcStart===null)tcStart=now;heroTC.textContent=toTC(Math.floor((now-tcStart)/1000*24));tcRaf=requestAnimationFrame(tick)}
-function syncTC(){const run=heroVisible&&!document.hidden&&!reduceMotion.matches;if(run&&!tcRaf){tcStart=null;tcRaf=requestAnimationFrame(tick)}if(!run&&tcRaf){cancelAnimationFrame(tcRaf);tcRaf=0}}
-if('IntersectionObserver' in window)new IntersectionObserver(e=>{heroVisible=e[0].isIntersecting;syncReel();syncTC()}).observe(hero);
-document.addEventListener('visibilitychange',()=>{syncReel();syncTC()});
-reduceMotion.addEventListener('change',()=>{syncReel();syncTC()});
-syncTC();
+if('IntersectionObserver' in window)new IntersectionObserver(e=>{heroVisible=e[0].isIntersecting;syncReel()}).observe(hero);
+document.addEventListener('visibilitychange',syncReel);
+reduceMotion.addEventListener('change',syncReel);
 
 /* Linha do tempo: a agulha percorre os quatro trechos conforme a rolagem. */
 const bar=$('#timeline-bar'),track=$('#track'),scrollTC=$('#scroll-tc');

@@ -415,16 +415,143 @@ dialog.is-closing::backdrop{animation:fade-out .3s both}
 
 <button type="button" class="to-top" id="to-top" aria-label="Voltar ao topo da página" aria-hidden="true" tabindex="-1"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 11 6-6 6 6M12 5v14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
 
-<!-- Catálogo de projetos: cada entrada vira um card. Para adicionar vídeos, inclua {"id": "ID_DO_YOUTUBE", "title": "Nome"}.
+<!-- Catálogo de projetos: cada entrada vira um card, na ordem abaixo (o primeiro é o destaque e a capa do quadro do topo).
+     Vídeo do Google Drive: {"drive": "ID_DO_ARQUIVO", "title": "Nome", "duration": "00:30"}, com a capa em assets/capas/ID_DO_ARQUIVO.jpg.
+     Vídeo do YouTube: {"id": "ID_DO_YOUTUBE", "title": "Nome"}. "client" aparece junto do tipo no card.
      "summary" é a frase curta do card (o que o vídeo entregou); "duration" (ex.: "01:30") aparece sobre a capa.
-     Projetos sem vídeo ficam ocultos até receberem o primeiro; campanhas aparecem mesmo antes dos vídeos. -->
+     Projetos sem vídeo ficam ocultos até receberem o primeiro. -->
 <script type="application/json" id="portfolio-projects">
 {
+  "assai-manifesto": {
+    "title": "Manifesto",
+    "client": "Assaí",
+    "kind": "edit",
+    "summary": "",
+    "description": "",
+    "credits": "",
+    "videos": [
+      {
+        "drive": "1vMTnmJTwTtophq5NBR8xFb1RcXtI1D88",
+        "title": "Manifesto",
+        "duration": "00:30"
+      }
+    ]
+  },
+  "lojas-cem-pra-toda-gente": {
+    "title": "Pra Toda Gente",
+    "client": "Lojas Cem",
+    "type": "campaign",
+    "kind": "campaign",
+    "summary": "",
+    "description": "",
+    "credits": "",
+    "videos": [
+      {
+        "drive": "1Uot6wWUTYMDt4WeVLborZdKkLS2-nN_M",
+        "title": "Filme 01",
+        "duration": "00:30"
+      },
+      {
+        "drive": "1WS_ceePOK8at-WLz9utnLdemJNeXeQ6B",
+        "title": "Filme 03",
+        "duration": "00:30"
+      },
+      {
+        "drive": "1zcY7gI38dUups3ovPhTNtIeIS41vLFqY",
+        "title": "Filme 04",
+        "duration": "00:30"
+      },
+      {
+        "drive": "1LY04JW33O7fvEstkD9wkePgwSUTJytv0",
+        "title": "Filme 05",
+        "duration": "00:30"
+      }
+    ]
+  },
+  "mpt": {
+    "title": "MPT",
+    "client": "MPT",
+    "type": "campaign",
+    "kind": "campaign",
+    "summary": "",
+    "description": "",
+    "credits": "",
+    "videos": [
+      {
+        "drive": "1R7sWzq0Ikhaf0KBg9D02fc8o6N4rtoaD",
+        "title": "Filme 01",
+        "duration": "01:00"
+      },
+      {
+        "drive": "1IFYBL3R_QvFPQOghikwXmvlq5kVbjrBp",
+        "title": "Filme 02",
+        "duration": "01:00"
+      },
+      {
+        "drive": "1ltIBQXt7uCgKx3uJCtERdgOyfOmHUZj7",
+        "title": "Filme 03",
+        "duration": "01:00"
+      },
+      {
+        "drive": "1PpgO_NOnf5Dbyo8HrlZ6CgpFiMF5-K51",
+        "title": "Filme 04",
+        "duration": "01:00"
+      },
+      {
+        "drive": "1nRmsylEgXJwjKljx-K89FmRkf7cUO54R",
+        "title": "Filme 05",
+        "duration": "01:00"
+      }
+    ]
+  },
+  "lojas-cem-mes-das-maes": {
+    "title": "Mês das Mães",
+    "client": "Lojas Cem",
+    "kind": "edit",
+    "summary": "",
+    "description": "",
+    "credits": "",
+    "videos": [
+      {
+        "drive": "1Op-tFcbWSVniECWaW0vglUSXs-yLeNLK",
+        "title": "Mês das Mães",
+        "duration": "01:00"
+      }
+    ]
+  },
+  "assai-institucional-crianca": {
+    "title": "Institucional Criança",
+    "client": "Assaí",
+    "kind": "edit",
+    "summary": "",
+    "description": "",
+    "credits": "",
+    "videos": [
+      {
+        "drive": "1W6FbZ8ZW97ZxdB6PXRwUVtBUuTtmba3x",
+        "title": "Institucional Criança",
+        "duration": "00:30"
+      }
+    ]
+  },
+  "solo-parque-da-floresta": {
+    "title": "Solo Parque da Floresta",
+    "kind": "edit",
+    "summary": "",
+    "description": "",
+    "credits": "",
+    "videos": [
+      {
+        "drive": "10u0syWUdAH-xgEtEEUF_0ayCqeyWlpuJ",
+        "title": "Solo Parque da Floresta",
+        "duration": "01:32"
+      }
+    ]
+  },
   "projeto-video": {
     "title": "Projeto em vídeo",
     "kind": "edit",
     "summary": "",
-    "duration": "",
     "description": "",
     "credits": "",
     "videos": [
@@ -438,7 +565,7 @@ dialog.is-closing::backdrop{animation:fade-out .3s both}
     "title": "Direitos de Verdade",
     "type": "campaign",
     "kind": "campaign",
-    "summary": "Vídeos da campanha em breve.",
+    "summary": "",
     "description": "Os vídeos desta campanha serão adicionados em breve.",
     "credits": "",
     "website": "https://direitosdeverdade.com/en/",
@@ -450,20 +577,23 @@ dialog.is-closing::backdrop{animation:fade-out .3s both}
 const $=s=>document.querySelector(s);
 const kindLabel={edit:'Edição',post:'Pós-produção',campaign:'Campanha'};
 const catalog=JSON.parse($('#portfolio-projects').textContent);
-const idPattern=/^[A-Za-z0-9_-]{11}$/;
 const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)');
 const pad=n=>String(n).padStart(2,'0');
 const toTC=f=>`${pad(Math.floor(f/86400))}:${pad(Math.floor(f/1440)%60)}:${pad(Math.floor(f/24)%60)}:${pad(f%24)}`;
-const thumb=(id,size='hqdefault')=>`https://i.ytimg.com/vi/${id}/${size}.jpg`;
 const campaignCover='data:image/svg+xml;charset=utf-8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900"><rect width="1600" height="900" fill="#e2e0da"/><g fill="none" stroke="#1c1c1a" stroke-opacity=".14"><path d="M0 450h1600M800 0v900"/><rect x="80" y="80" width="1440" height="740" rx="24"/></g><text x="120" y="160" font-family="Menlo,monospace" font-size="30" letter-spacing="4" fill="#6a6964">CAMPANHA · VÍDEOS EM BREVE</text></svg>');
-function videosOf(d){const seen=new Set();return (Array.isArray(d.videos)?d.videos:[]).filter(v=>v&&idPattern.test(v.id||'')&&!seen.has(v.id)&&seen.add(v.id)).map((v,i)=>({id:v.id,title:String(v.title||`Vídeo ${i+1}`)}))}
+const ytPattern=/^[A-Za-z0-9_-]{11}$/,drivePattern=/^[A-Za-z0-9_-]{25,}$/;
+const thumb=v=>v.src==='drive'?`../assets/capas/${v.id}.jpg`:`https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`;
+const playerSrc=v=>v.src==='drive'?`https://drive.google.com/file/d/${v.id}/preview`:`https://www.youtube-nocookie.com/embed/${v.id}?autoplay=1&rel=0&playsinline=1`;
+const externalLink=v=>v.src==='drive'?{href:`https://drive.google.com/file/d/${v.id}/view`,text:'Abrir no Google Drive ↗'}:{href:`https://www.youtube.com/watch?v=${v.id}`,text:'Assistir no YouTube ↗'};
+// Cada vídeo vem do Google Drive ("drive") ou do YouTube ("id").
+function videosOf(d){const seen=new Set();return (Array.isArray(d.videos)?d.videos:[]).map(v=>{if(!v)return null;if(drivePattern.test(v.drive||''))return {src:'drive',id:v.drive,title:v.title,duration:v.duration};if(ytPattern.test(v.id||''))return {src:'youtube',id:v.id,title:v.title,duration:v.duration};return null}).filter(v=>v&&!seen.has(v.src+v.id)&&seen.add(v.src+v.id)).map((v,i)=>({...v,title:String(v.title||`Vídeo ${i+1}`),duration:String(v.duration||'')}))}
 function websiteOf(d){try{const u=new URL(d.website);return ['https:','http:'].includes(u.protocol)?u.href:''}catch{return ''}}
-// Capa em alta resolução quando existir; senão, a padrão do YouTube.
-function setThumb(img,id){img.onerror=()=>{img.onerror=null;img.src=thumb(id)};img.src=thumb(id,'maxresdefault')}
+// Capa: a imagem salva no site (Drive) ou a do YouTube em alta resolução, quando existir.
+function setThumb(img,v){img.onerror=null;if(v.src!=='youtube'){img.src=thumb(v);return}img.onerror=()=>{img.onerror=null;img.src=thumb(v)};img.src=`https://i.ytimg.com/vi/${v.id}/maxresdefault.jpg`}
 
 /* Cards */
 const works=$('#works');
-const projects=Object.entries(catalog).map(([key,details])=>({key,details,videos:videosOf(details)})).filter(p=>p.videos.length||p.details.type==='campaign');
+const projects=Object.entries(catalog).map(([key,details])=>({key,details,videos:videosOf(details)})).filter(p=>p.videos.length);
 projects.forEach((p,i)=>{
  const card=document.createElement('button');
  card.type='button';card.className='work reveal'+(i===0?' is-featured':'');
@@ -472,12 +602,12 @@ projects.forEach((p,i)=>{
  const count=p.videos.length?`${p.videos.length} ${p.videos.length===1?'vídeo':'vídeos'}`:'Em breve';
  card.setAttribute('aria-label',`${card.dataset.title} — ${count}`);
  card.innerHTML=`<div class="work-media"><img alt="" loading="${i===0?'eager':'lazy'}" decoding="async"><span class="chip mono"></span>${p.videos.length?'<span class="work-play" aria-hidden="true"></span>':''}</div><div class="work-info"><span class="label"></span><h3></h3><span class="work-desc"></span></div>`;
- const chip=card.querySelector('.chip');chip.textContent=p.details.duration||'';chip.hidden=!chip.textContent;
- card.querySelector('.label').textContent=(kindLabel[card.dataset.kind]||'Projeto')+(p.videos.length>1?` · ${count}`:'');
+ const chip=card.querySelector('.chip');chip.textContent=p.details.duration||(p.videos.length===1?p.videos[0].duration:'');chip.hidden=!chip.textContent;
+ card.querySelector('.label').textContent=[p.details.client,kindLabel[card.dataset.kind]||'Projeto',p.videos.length>1?count:''].filter(Boolean).join(' · ');
  card.querySelector('h3').textContent=card.dataset.title;
  const desc=card.querySelector('.work-desc');desc.textContent=p.details.summary||'';desc.hidden=!desc.textContent;
  const img=card.querySelector('img');
- if(p.videos.length)setThumb(img,p.videos[0].id);else img.src=campaignCover;
+ if(p.videos.length)setThumb(img,p.videos[0]);else img.src=campaignCover;
  card.addEventListener('click',()=>openProject(card));
  works.append(card);
 });
@@ -502,7 +632,7 @@ $('.filters').hidden=filterButtons.filter(b=>b.dataset.filter!=='all'&&!b.hidden
 /* Abertura: vídeo próprio se houver; senão a capa do primeiro projeto. */
 const hero=$('#inicio'),reelVideo=$('#reel-video');
 const firstWithVideo=projects.find(p=>p.videos.length);
-if(firstWithVideo){setThumb($('#reel-poster'),firstWithVideo.videos[0].id);$('#reel-btn-meta').textContent=firstWithVideo.details.title}
+if(firstWithVideo){setThumb($('#reel-poster'),firstWithVideo.videos[0]);$('#reel-btn-meta').textContent=firstWithVideo.details.title}
 else $('#reel-poster').src=campaignCover;
 $('#reel-btn').addEventListener('click',()=>{const card=firstWithVideo&&works.querySelector(`[data-project="${firstWithVideo.key}"]`);if(card)openProject(card,$('#reel-btn'));else location.hash='#trabalhos'});
 $('#reel-cta').addEventListener('click',()=>$('#reel-btn').click());
@@ -549,17 +679,17 @@ function selectVideo(i){
  if(!modal.open||closing||!ready||!activeVideos[i]||i===activeIndex)return;
  const v=activeVideos[i];
  player.replaceChildren();activeIndex=i;
- setThumb($('#modal-art'),v.id);
+ setThumb($('#modal-art'),v);
  $('#campaign-video-title').textContent=v.title;
  $('#campaign-position').textContent=`${pad(i+1)} / ${pad(activeVideos.length)}`;
- $('#modal-youtube').href=`https://www.youtube.com/watch?v=${v.id}`;
+ const ext=externalLink(v);$('#modal-youtube').href=ext.href;$('#modal-youtube').textContent=ext.text;
  strip.querySelectorAll('button').forEach((b,j)=>b.setAttribute('aria-pressed',String(j===i)));
  const f=document.createElement('iframe');
- f.title=`${activeCard.dataset.title} — ${v.title} — player do YouTube`;
+ f.title=`${activeCard.dataset.title} — ${v.title} — player de vídeo`;
  f.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
  f.allowFullscreen=true;f.referrerPolicy='strict-origin-when-cross-origin';
  f.addEventListener('load',()=>f.classList.add('is-ready'),{once:true});
- f.src=`https://www.youtube-nocookie.com/embed/${v.id}?autoplay=1&rel=0&playsinline=1`;
+ f.src=playerSrc(v);
  player.append(f);
 }
 async function openProject(card,from=card){
@@ -580,12 +710,12 @@ async function openProject(card,from=card){
  if(activeVideos.length>1)activeVideos.forEach((v,i)=>{
   const b=document.createElement('button');b.type='button';b.className='campaign-video';b.disabled=true;
   b.setAttribute('aria-pressed',String(i===0));b.setAttribute('aria-label',`Assistir: ${v.title}`);b.setAttribute('aria-controls','modal-player');
-  const im=document.createElement('img');im.src=thumb(v.id);im.alt='';im.loading='lazy';
+  const im=document.createElement('img');im.src=thumb(v);im.alt='';im.loading='lazy';
   const l=document.createElement('span');l.textContent=v.title;
   b.append(im,l);b.addEventListener('click',()=>selectVideo(i));strip.append(b);
  });
  const site=websiteOf(details),siteLink=$('#modal-website');siteLink.hidden=!site;if(site)siteLink.href=site;else siteLink.removeAttribute('href');
- const yt=$('#modal-youtube');yt.hidden=!has;if(has)yt.href=`https://www.youtube.com/watch?v=${activeVideos[0].id}`;else yt.removeAttribute('href');
+ const yt=$('#modal-youtube');yt.hidden=!has;if(has){const ext=externalLink(activeVideos[0]);yt.href=ext.href;yt.textContent=ext.text}else yt.removeAttribute('href');
  prevOverflow=document.documentElement.style.overflow;document.documentElement.style.overflow='hidden';
  modal.classList.remove('is-closing');modal.showModal();modal.scrollTop=0;
  anim=modal.animate([{transform:reduceMotion.matches?'none':fromTransform(),opacity:reduceMotion.matches?0:1},{transform:'none',opacity:1}],{duration:reduceMotion.matches?120:340,easing:'cubic-bezier(.2,.7,.2,1)'});

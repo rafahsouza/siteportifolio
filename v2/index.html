@@ -417,11 +417,26 @@ dialog.is-closing::backdrop{animation:fade-out .3s both}
 
 <!-- Catálogo de projetos: cada entrada vira um card, na ordem abaixo (o primeiro é o destaque e a capa do quadro do topo).
      Vídeo do Google Drive: {"drive": "ID_DO_ARQUIVO", "title": "Nome", "duration": "00:30"}, com a capa em assets/capas/ID_DO_ARQUIVO.jpg.
-     Vídeo do YouTube: {"id": "ID_DO_YOUTUBE", "title": "Nome"}. "client" aparece junto do tipo no card.
+     Vídeo do YouTube: {"id": "ID_DO_YOUTUBE", "title": "Nome"}. "client" aparece junto do tipo no card; "cover" (arquivo em assets/capas) troca a capa do card.
      "summary" é a frase curta do card (o que o vídeo entregou); "duration" (ex.: "01:30") aparece sobre a capa.
      Projetos sem vídeo ficam ocultos até receberem o primeiro. -->
 <script type="application/json" id="portfolio-projects">
 {
+  "lojas-cem-mes-das-maes": {
+    "title": "Mês das Mães",
+    "client": "Lojas Cem",
+    "kind": "edit",
+    "summary": "",
+    "description": "",
+    "credits": "",
+    "videos": [
+      {
+        "drive": "1Op-tFcbWSVniECWaW0vglUSXs-yLeNLK",
+        "title": "Mês das Mães",
+        "duration": "01:00"
+      }
+    ]
+  },
   "assai-manifesto": {
     "title": "Manifesto",
     "client": "Assaí",
@@ -468,8 +483,8 @@ dialog.is-closing::backdrop{animation:fade-out .3s both}
       }
     ]
   },
-  "mpt": {
-    "title": "MPT",
+  "direitos-de-verdade": {
+    "title": "Direitos de Verdade",
     "client": "MPT",
     "type": "campaign",
     "kind": "campaign",
@@ -502,22 +517,9 @@ dialog.is-closing::backdrop{animation:fade-out .3s both}
         "title": "Filme 05",
         "duration": "01:00"
       }
-    ]
-  },
-  "lojas-cem-mes-das-maes": {
-    "title": "Mês das Mães",
-    "client": "Lojas Cem",
-    "kind": "edit",
-    "summary": "",
-    "description": "",
-    "credits": "",
-    "videos": [
-      {
-        "drive": "1Op-tFcbWSVniECWaW0vglUSXs-yLeNLK",
-        "title": "Mês das Mães",
-        "duration": "01:00"
-      }
-    ]
+    ],
+    "website": "https://direitosdeverdade.com/en/",
+    "cover": "direitos-de-verdade.jpg"
   },
   "assai-institucional-crianca": {
     "title": "Institucional Criança",
@@ -547,29 +549,6 @@ dialog.is-closing::backdrop{animation:fade-out .3s both}
         "duration": "01:32"
       }
     ]
-  },
-  "projeto-video": {
-    "title": "Projeto em vídeo",
-    "kind": "edit",
-    "summary": "",
-    "description": "",
-    "credits": "",
-    "videos": [
-      {
-        "id": "Srva3FuVA6Q",
-        "title": "Vídeo principal"
-      }
-    ]
-  },
-  "direitos-de-verdade": {
-    "title": "Direitos de Verdade",
-    "type": "campaign",
-    "kind": "campaign",
-    "summary": "",
-    "description": "Os vídeos desta campanha serão adicionados em breve.",
-    "credits": "",
-    "website": "https://direitosdeverdade.com/en/",
-    "videos": []
   }
 }
 </script>
@@ -607,7 +586,7 @@ projects.forEach((p,i)=>{
  card.querySelector('h3').textContent=card.dataset.title;
  const desc=card.querySelector('.work-desc');desc.textContent=p.details.summary||'';desc.hidden=!desc.textContent;
  const img=card.querySelector('img');
- if(p.videos.length)setThumb(img,p.videos[0]);else img.src=campaignCover;
+ if(p.details.cover)img.src=`../assets/capas/${p.details.cover}`;else if(p.videos.length)setThumb(img,p.videos[0]);else img.src=campaignCover;
  card.addEventListener('click',()=>openProject(card));
  works.append(card);
 });

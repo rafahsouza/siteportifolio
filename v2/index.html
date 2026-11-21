@@ -269,12 +269,16 @@ dialog.is-closing::backdrop{animation:fade-out .3s both}
  .crop,.hud-tr{display:none}
  .hud{font-size:11px}.hud-tl{top:12px;left:12px}.hud-br{bottom:12px;right:12px}
  .play{padding:8px 12px 8px 8px;font-size:13px}
- .services{grid-template-columns:1fr}
- .service,.service+.service{flex-direction:row;flex-wrap:wrap;column-gap:16px;padding:20px 0;border-left:0;border-top:1px solid var(--line)}
- .service:first-child{border-top:0}
- .service-top{gap:12px}
- .service h3{margin:0;align-self:center}
- .service p{flex-basis:100%}
+ /* Celular: serviços em grade de 2 colunas, compactos; o último ocupa a linha inteira. */
+ .services{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .service,.service+.service{gap:8px;padding:16px 14px 18px 0;border-left:0;border-top:1px solid var(--line)}
+ .service:nth-child(even){padding-left:14px;padding-right:0;border-left:1px solid var(--line)}
+ .service:nth-child(-n+2){border-top:0}
+ .service:last-child{grid-column:1/-1}
+ .service-icon{width:34px;height:34px;border-radius:10px}
+ .service-icon svg{width:17px;height:17px}
+ .service h3{margin:2px 0 0;font-size:16px}
+ .service p{font-size:13px;line-height:1.45}
  .contact-actions{flex-direction:column;align-items:stretch;width:100%}
  footer{flex-direction:column}
 }

@@ -146,7 +146,8 @@ main>section{scroll-margin-top:96px}
 .work-media{position:relative;aspect-ratio:16/9;overflow:hidden;border-radius:var(--radius);background:var(--sunk)}
 .work-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .9s var(--ease)}
 .work:hover .work-media img,.work:focus-visible .work-media img{transform:scale(1.04)}
-.work-media .chip{position:absolute;left:14px;bottom:14px;font-size:11px}
+.work-tags{position:absolute;left:14px;bottom:14px;right:70px;display:flex;flex-wrap:wrap;gap:6px}
+.work-tags .chip{font-size:11px}
 .work-play{position:absolute;right:14px;bottom:14px;width:44px;height:44px;border-radius:50%;background:var(--surface);display:grid;place-items:center;transform:scale(.85);opacity:0;transition:opacity .3s,transform .3s var(--ease)}
 .work-play::after{content:"";border-left:10px solid var(--ink);border-top:6px solid transparent;border-bottom:6px solid transparent;margin-left:3px}
 .work:hover .work-play,.work:focus-visible .work-play{opacity:1;transform:none}
@@ -269,6 +270,8 @@ dialog.is-closing::backdrop{animation:fade-out .3s both}
  .crop,.hud-tr{display:none}
  .hud{font-size:11px}.hud-tl{top:12px;left:12px}.hud-br{bottom:12px;right:12px}
  .play{padding:8px 12px 8px 8px;font-size:13px}
+ .work-tags{left:10px;bottom:10px;right:10px;gap:5px}
+ .work-tags .chip{font-size:10px;padding:6px 9px;letter-spacing:.06em}
  /* Celular: serviços em grade de 2 colunas, compactos; o último ocupa a linha inteira. */
  .services{grid-template-columns:repeat(2,minmax(0,1fr))}
  .service,.service+.service{gap:8px;padding:16px 14px 18px 0;border-left:0;border-top:1px solid var(--line)}
@@ -595,11 +598,12 @@ projects.forEach((p,i)=>{
  card.setAttribute('aria-haspopup','dialog');
  const count=p.videos.length?`${p.videos.length} ${p.videos.length===1?'vídeo':'vídeos'}`:'Em breve';
  card.setAttribute('aria-label',`${card.dataset.title} — ${count}`);
- card.innerHTML=`<div class="work-media"><img alt="" loading="${i===0?'eager':'lazy'}" decoding="async"><span class="chip mono"></span>${p.videos.length?'<span class="work-play" aria-hidden="true"></span>':''}</div><div class="work-info"><span class="label"></span><h3></h3><span class="work-desc"></span></div>`;
+ card.innerHTML=`<div class="work-media"><img alt="" loading="${i===0?'eager':'lazy'}" decoding="async"><span class="work-tags"><span class="chip work-brand"></span><span class="chip work-meta"></span></span>${p.videos.length?'<span class="work-play" aria-hidden="true"></span>':''}</div><div class="work-info"><h3></h3><span class="work-desc"></span></div>`;
  // Campanha ganha a marca no próprio card; filme único mostra a duração.
  const isCampaign=p.details.type==='campaign'||p.videos.length>1;
- const chip=card.querySelector('.chip');chip.textContent=isCampaign?`Campanha · ${p.videos.length} ${p.videos.length===1?'filme':'filmes'}`:(p.details.duration||p.videos[0]?.duration||'');chip.hidden=!chip.textContent;
- card.querySelector('.label').textContent=[p.details.brand||p.details.client||kindLabel[card.dataset.kind]||'Projeto',p.details.year].filter(Boolean).join(' · ');
+ const chip=card.querySelector('.work-meta');chip.textContent=isCampaign?`Campanha · ${p.videos.length} ${p.videos.length===1?'filme':'filmes'}`:(p.details.duration||p.videos[0]?.duration||'');chip.hidden=!chip.textContent;
+ // Marca e ano viram uma etiqueta sobre a capa, ao lado da duração.
+ const brand=card.querySelector('.work-brand');brand.textContent=[p.details.brand||p.details.client,p.details.year].filter(Boolean).join(' · ');brand.hidden=!brand.textContent;
  card.querySelector('h3').textContent=card.dataset.title;
  const desc=card.querySelector('.work-desc');desc.textContent=p.details.summary||'';desc.hidden=!desc.textContent;
  const img=card.querySelector('img');

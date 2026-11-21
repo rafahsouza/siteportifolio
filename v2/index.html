@@ -598,12 +598,13 @@ projects.forEach((p,i)=>{
  card.setAttribute('aria-haspopup','dialog');
  const count=p.videos.length?`${p.videos.length} ${p.videos.length===1?'vídeo':'vídeos'}`:'Em breve';
  card.setAttribute('aria-label',`${card.dataset.title} — ${count}`);
- card.innerHTML=`<div class="work-media"><img alt="" loading="${i===0?'eager':'lazy'}" decoding="async"><span class="work-tags"><span class="chip work-brand"></span><span class="chip work-meta"></span></span>${p.videos.length?'<span class="work-play" aria-hidden="true"></span>':''}</div><div class="work-info"><h3></h3><span class="work-desc"></span></div>`;
+ card.innerHTML=`<div class="work-media"><img alt="" loading="${i===0?'eager':'lazy'}" decoding="async"><span class="work-tags"><span class="chip work-meta"></span></span>${p.videos.length?'<span class="work-play" aria-hidden="true"></span>':''}</div><div class="work-info"><h3></h3><span class="work-desc"></span></div>`;
  // Campanha ganha a marca no próprio card; filme único mostra a duração.
  const isCampaign=p.details.type==='campaign'||p.videos.length>1;
- const chip=card.querySelector('.work-meta');chip.textContent=isCampaign?`Campanha · ${p.videos.length} ${p.videos.length===1?'filme':'filmes'}`:(p.details.duration||p.videos[0]?.duration||'');chip.hidden=!chip.textContent;
- // Marca e ano viram uma etiqueta sobre a capa, ao lado da duração.
- const brand=card.querySelector('.work-brand');brand.textContent=[p.details.brand||p.details.client,p.details.year].filter(Boolean).join(' · ');brand.hidden=!brand.textContent;
+ // Uma etiqueta só sobre a capa: marca · ano · duração (ou campanha e número de filmes).
+ const chip=card.querySelector('.work-meta');
+ chip.textContent=[p.details.brand||p.details.client,p.details.year,isCampaign?`Campanha · ${p.videos.length} ${p.videos.length===1?'filme':'filmes'}`:(p.details.duration||p.videos[0]?.duration||'')].filter(Boolean).join(' · ');
+ chip.hidden=!chip.textContent;
  card.querySelector('h3').textContent=card.dataset.title;
  const desc=card.querySelector('.work-desc');desc.textContent=p.details.summary||'';desc.hidden=!desc.textContent;
  const img=card.querySelector('img');

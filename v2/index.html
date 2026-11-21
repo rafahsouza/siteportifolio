@@ -205,7 +205,8 @@ dialog.is-closing::backdrop{animation:fade-out .3s both}
 .close:hover{background:var(--ink);color:var(--surface)}
 .modal-media{position:relative;aspect-ratio:16/9;background:#1d1d1b;border-radius:var(--radius);overflow:hidden}
 .modal-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-#modal-player,#modal-player iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+#modal-player,#modal-player iframe,#modal-player video{position:absolute;inset:0;width:100%;height:100%;border:0}
+#modal-player video{background:#000;object-fit:contain}
 #modal-player iframe{opacity:0;transition:opacity .25s}
 #modal-player iframe.is-ready{opacity:1}
 .modal-body{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px 32px;margin-top:18px}
@@ -569,13 +570,16 @@ const pad=n=>String(n).padStart(2,'0');
 const toTC=f=>`${pad(Math.floor(f/86400))}:${pad(Math.floor(f/1440)%60)}:${pad(Math.floor(f/24)%60)}:${pad(f%24)}`;
 const campaignCover='data:image/svg+xml;charset=utf-8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900"><rect width="1600" height="900" fill="#e2e0da"/><g fill="none" stroke="#1c1c1a" stroke-opacity=".14"><path d="M0 450h1600M800 0v900"/><rect x="80" y="80" width="1440" height="740" rx="24"/></g><text x="120" y="160" font-family="Menlo,monospace" font-size="30" letter-spacing="4" fill="#6a6964">CAMPANHA · VÍDEOS EM BREVE</text></svg>');
 const ytPattern=/^[A-Za-z0-9_-]{11}$/,drivePattern=/^[A-Za-z0-9_-]{25,}$/;
-const thumb=v=>v.src==='drive'?`../assets/capas/${v.id}.jpg`:`https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`;
-const playerSrc=v=>v.src==='drive'?`https://drive.google.com/file/d/${v.id}/preview`:`https://www.youtube-nocookie.com/embed/${v.id}?autoplay=1&rel=0&playsinline=1`;
+// Vídeos do catálogo com "drive" tocam a versão web salva no site (assets/videos/ID.mp4); a capa fica em assets/capas/ID.jpg.
+const thumb=v=>v.src==='file'?`../assets/capas/${v.id}.jpg`:`https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`;
+const videoFile=v=>`../assets/videos/${v.id}.mp4`;
+const playerSrc=v=>`https://www.youtube-nocookie.com/embed/${v.id}?autoplay=1&rel=0&playsinline=1`;
+const touchDevice=matchMedia('(hover: none) and (pointer: coarse)').matches;
 // Vídeos do Drive não ganham link externo; os do YouTube mantêm 'Assistir no YouTube'.
 const externalLink=v=>v.src==='youtube'?{href:`https://www.youtube.com/watch?v=${v.id}`,text:'Assistir no YouTube ↗'}:null;
 function syncExternalLink(v){const a=$('#modal-youtube'),ext=v&&externalLink(v);a.hidden=!ext;if(ext){a.href=ext.href;a.textContent=ext.text}else a.removeAttribute('href')}
 // Cada vídeo vem do Google Drive ("drive") ou do YouTube ("id").
-function videosOf(d){const seen=new Set();return (Array.isArray(d.videos)?d.videos:[]).map(v=>{if(!v)return null;if(drivePattern.test(v.drive||''))return {src:'drive',id:v.drive,title:v.title,duration:v.duration};if(ytPattern.test(v.id||''))return {src:'youtube',id:v.id,title:v.title,duration:v.duration};return null}).filter(v=>v&&!seen.has(v.src+v.id)&&seen.add(v.src+v.id)).map((v,i)=>({...v,title:String(v.title||`Vídeo ${i+1}`),duration:String(v.duration||'')}))}
+function videosOf(d){const seen=new Set();return (Array.isArray(d.videos)?d.videos:[]).map(v=>{if(!v)return null;if(drivePattern.test(v.drive||''))return {src:'file',id:v.drive,title:v.title,duration:v.duration};if(ytPattern.test(v.id||''))return {src:'youtube',id:v.id,title:v.title,duration:v.duration};return null}).filter(v=>v&&!seen.has(v.src+v.id)&&seen.add(v.src+v.id)).map((v,i)=>({...v,title:String(v.title||`Vídeo ${i+1}`),duration:String(v.duration||'')}))}
 function websiteOf(d){try{const u=new URL(d.website);return ['https:','http:'].includes(u.protocol)?u.href:''}catch{return ''}}
 // Capa: a imagem salva no site (Drive) ou a do YouTube em alta resolução, quando existir.
 function setThumb(img,v){img.onerror=null;if(v.src!=='youtube'){img.src=thumb(v);return}img.onerror=()=>{img.onerror=null;img.src=thumb(v)};img.src=`https://i.ytimg.com/vi/${v.id}/maxresdefault.jpg`}
@@ -651,6 +655,26 @@ function fromTransform(){
  const a=(origin.querySelector('.work-media')||origin).getBoundingClientRect(),b=modal.getBoundingClientRect();
  return `translate(${a.left+a.width/2-b.left-b.width/2}px,${a.top+a.height/2-b.top-b.height/2}px) scale(${a.width/b.width},${a.height/b.height})`;
 }
+/* Player nativo: no computador começa a tocar sozinho; no celular abre em tela cheia ao dar play. */
+function nativePlayer(v){
+ const el=document.createElement('video');
+ el.src=videoFile(v);el.poster=thumb(v);el.controls=true;el.preload='metadata';
+ el.setAttribute('aria-label',`${activeCard.dataset.title} — ${v.title}`);
+ el.setAttribute('controlsList','nodownload');
+ if(touchDevice){
+  // Sem playsinline o iPhone já toca em tela cheia; no Android pedimos a tela cheia ao dar play.
+  el.addEventListener('play',()=>{
+   if(document.fullscreenElement||document.webkitFullscreenElement)return;
+   const req=el.requestFullscreen||el.webkitRequestFullscreen;
+   if(req){const p=req.call(el);if(p&&p.then)p.then(()=>screen.orientation?.lock?.('landscape').catch(()=>{})).catch(()=>{})}
+   else if(el.webkitEnterFullscreen){try{el.webkitEnterFullscreen()}catch{}}
+  });
+ }else{
+  el.playsInline=true;el.autoplay=true;
+  requestAnimationFrame(()=>el.play().catch(()=>{}));
+ }
+ return el;
+}
 function selectVideo(i){
  if(!modal.open||closing||!ready||!activeVideos[i]||i===activeIndex)return;
  const v=activeVideos[i];
@@ -660,6 +684,7 @@ function selectVideo(i){
  $('#campaign-position').textContent=`${pad(i+1)} / ${pad(activeVideos.length)}`;
  syncExternalLink(v);
  strip.querySelectorAll('button').forEach((b,j)=>b.setAttribute('aria-pressed',String(j===i)));
+ if(v.src==='file'){player.append(nativePlayer(v));return}
  const f=document.createElement('iframe');
  f.title=`${activeCard.dataset.title} — ${v.title} — player de vídeo`;
  f.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';

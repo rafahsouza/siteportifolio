@@ -95,10 +95,7 @@ a:hover>.arrow,button:hover>.arrow{transform:translateX(3px)}
 .reel-cta .cta-text{display:flex;flex-direction:column;gap:4px;min-width:0}
 .reel-cta strong{font-family:var(--serif);font-weight:400;font-size:clamp(28px,3.4vw,48px);line-height:1;letter-spacing:-.02em}
 .reel-cta strong em{color:var(--accent)}
-.reel-cta .cta-hint{margin-left:auto;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);white-space:nowrap;display:flex;align-items:center;gap:8px}
-.reel-cta .cta-hint i{font-style:normal;display:inline-block;transition:transform .35s var(--ease)}
 .reel-cta:hover .cta-play{transform:scale(1.08)}
-.reel-cta:hover .cta-hint i{transform:translateY(3px)}
 .reel{position:relative;margin:clamp(14px,1.6vw,20px) 0 0}
 .crop{position:absolute;width:18px;height:18px;border:0 solid var(--ink);pointer-events:none}
 .crop.a{top:-10px;left:-10px;border-top-width:1px;border-left-width:1px}
@@ -110,7 +107,6 @@ a:hover>.arrow,button:hover>.arrow{transform:translateX(3px)}
 .reel-frame video{opacity:0}
 .hero.has-video .reel-frame video{opacity:1}
 .reel-frame:hover img,.reel-frame:hover video{transform:scale(1.025)}
-.reel-frame::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#0000 55%,#0008)}
 .hud{position:absolute;z-index:2;display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:#f6f5f2}
 .hud-tl{top:18px;left:20px}.hud-tr{top:18px;right:20px}.hud-br{bottom:16px;right:20px}
 .play{display:inline-flex;align-items:center;gap:10px;font-family:var(--sans);font-size:14px;font-weight:600;letter-spacing:0;padding:10px 16px 10px 12px;border-radius:999px;background:var(--surface);color:var(--ink);transition:transform .3s var(--ease)}
@@ -315,15 +311,12 @@ dialog.is-closing::backdrop{animation:fade-out .3s both}
  <button class="reel-cta" id="reel-cta" type="button" aria-label="Assistir ao showreel">
   <span class="cta-play" aria-hidden="true"></span>
   <span class="cta-text"><span class="label">Showreel</span><strong>Assista ao <em>reel</em></strong></span>
-  <span class="cta-hint" aria-hidden="true">Assistir <i>↓</i></span>
  </button>
  <figure class="reel">
   <span class="crop a" aria-hidden="true"></span><span class="crop b" aria-hidden="true"></span><span class="crop c" aria-hidden="true"></span><span class="crop d" aria-hidden="true"></span>
   <button class="reel-frame" id="reel-btn" type="button" aria-label="Assistir ao projeto em destaque">
    <img id="reel-poster" alt="" decoding="async">
    <video id="reel-video" muted loop playsinline preload="none" tabindex="-1" aria-hidden="true" data-reel-src=""></video>
-   <span class="hud hud-tl"><span class="dot blink" aria-hidden="true"></span>REC</span>
-   <span class="hud hud-tr">24 FPS · 16:9</span>
   </button>
   <figcaption class="reel-caption"><span id="reel-btn-meta">Projeto em destaque</span><span>Showreel completo em breve</span></figcaption>
  </figure>

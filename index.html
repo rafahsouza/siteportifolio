@@ -87,7 +87,8 @@ a:hover>.arrow,button:hover>.arrow{transform:translateX(3px)}
 .word-swap .typed::after{background:currentColor;animation:caret 1s steps(1) infinite}
 .word-swap .typed.busy::after{animation:none}
 @keyframes caret{50%{opacity:0}}
-@media(prefers-reduced-motion:reduce){.word-swap .typed::after{display:none}}
+/* A digitação roda para todos, inclusive com "reduzir movimento" ligado no sistema. */
+@media(prefers-reduced-motion:reduce){.word-swap .typed::after{animation:caret 1s steps(1) infinite!important}.word-swap .typed.busy::after{animation:none!important}}
 .display .line{display:block}
 .hero-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:24px 40px;margin-top:clamp(28px,4vw,48px)}
 .hero-lede{margin:0;max-width:40ch;font-size:clamp(18px,1.7vw,24px);line-height:1.5;color:var(--ink-2)}
@@ -642,7 +643,7 @@ function typeStep(phase){
  else typeStep('hold');
 }
 function syncSwap(){
- const run=heroVisible&&!document.hidden&&!reduceMotion.matches;
+ const run=heroVisible&&!document.hidden;
  if(run&&!typing){typing=true;typeStep('hold')}
  if(!run&&typing){typing=false;clearTimeout(typeTimer);typed.classList.remove('busy');typed.textContent=TYPE_WORDS[wordIndex]}
 }

@@ -102,6 +102,9 @@ a:hover>.arrow,button:hover>.arrow{transform:translateX(3px)}
 .reel-cta strong{font-family:var(--serif);font-weight:400;font-size:clamp(28px,3.4vw,48px);line-height:1;letter-spacing:-.02em}
 .reel-cta strong em{color:var(--accent)}
 .reel-cta:hover .cta-play{transform:scale(1.08)}
+/* Temporário: esconde a chamada e o quadro do showreel. */
+.hero.sem-reel .reel-cta,.hero.sem-reel .reel{display:none}
+.hero.sem-reel ~ #trabalhos{padding-top:var(--block)}
 .reel{position:relative;margin:clamp(14px,1.6vw,20px) 0 0}
 .crop{position:absolute;width:18px;height:18px;border:0 solid var(--ink);pointer-events:none}
 .crop.a{top:-10px;left:-10px;border-top-width:1px;border-left-width:1px}
@@ -305,7 +308,8 @@ dialog.is-closing::backdrop{animation:fade-out .3s both}
 
 <main>
 <!-- Showreel: coloque o caminho de um MP4 curto e sem áudio em data-reel-src. Sem vídeo, mostra a capa do primeiro projeto. -->
-<section class="hero" id="inicio" aria-labelledby="hero-title">
+<!-- Showreel escondido temporariamente: para voltar a mostrar, remova a classe "sem-reel" abaixo. -->
+<section class="hero sem-reel" id="inicio" aria-labelledby="hero-title">
  <h1 class="display" id="hero-title" aria-label="Transformando ideias em filmes, narrativas e experiências visuais."><span class="line" aria-hidden="true"><span>Transformando ideias</span></span> <span class="line" aria-hidden="true"><span>em <em class="word-swap" id="word-swap"><span class="sizer">filmes</span><span class="sizer">vídeos</span><span class="typed" id="typed">filmes</span></em>, narrativas e</span></span> <span class="line" aria-hidden="true"><span>experiências visuais.</span></span></h1>
  <div class="hero-row">
   <p class="hero-lede">Edição e pós-produção com ritmo, clareza e intenção.</p>
